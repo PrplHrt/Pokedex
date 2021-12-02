@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
  */
 /**
  *
- * @author wissam
+ * @author Eyad 
  */
 public class AddPokemon extends javax.swing.JFrame {
 
@@ -26,6 +26,7 @@ public class AddPokemon extends javax.swing.JFrame {
     Statement statement;
     PreparedStatement prepStatement;
     ResultSet rs;
+    
 
     public AddPokemon(myDBCon connect) {
         initComponents();
@@ -36,21 +37,35 @@ public class AddPokemon extends javax.swing.JFrame {
         lblIDError.setVisible(false);
         lblNameError.setVisible(false);
         lblTypeError.setVisible(false);
-        //populate mgr and deptno combo boxes 
+        //populate Gen, Reg, Pre-Ev, and Type combo boxes 
         try {
             // make the result set scrolable forward/backward updatable
             statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             // populate valid mgr numbers 
-            rs = statement.executeQuery("SELECT empno FROM emp ORDER BY empno ASC");
-            // populate mgr combo box
+            rs = statement.executeQuery("SELECT name FROM type ORDER BY name ASC");
+            // populate Type combo boxes
+            // Adding null to allow just 1 Type to be selected
+            cmbType2.addItem(null);
             while (rs.next()) {
-                cmbGen.addItem(rs.getString("empno"));
+                cmbType1.addItem(rs.getString("name"));
+                cmbType2.addItem(rs.getString("name"));
             }
-
-            // get and populate valid department numbers 
-            rs = statement.executeQuery("SELECT DISTINCT deptno, dname FROM dept ORDER BY deptno ASC");
+            
+            // get and populate valid regions 
+            rs = statement.executeQuery("SELECT name FROM region ORDER BY name ASC");
             while (rs.next()) {
-                cmbPreEv.addItem(rs.getString("deptno"));
+                cmbReg.addItem(rs.getString("name"));
+            }
+            
+            // get and populate valid Pre-evolutions 
+            rs = statement.executeQuery("SELECT pokedexID FROM pokemon ORDER BY pokedexID ASC");
+            while (rs.next()) {
+                cmbPreEv.addItem(rs.getString("pokedexID"));
+            }
+            
+            // get and populate valid generations
+            for(String gen: generations){
+                
             }
 
             rs.close();
@@ -321,18 +336,18 @@ public class AddPokemon extends javax.swing.JFrame {
 
             if (isValidData()) {
                 prepStatement = con.prepareStatement("INSERT INTO emp (empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES (? , ? , ?, ? , ? , ?, ?, ?)");
-                prepStatement.setInt(1, Integer.parseInt(txtPokedexID.getText()));
-                prepStatement.setString(2, txtName.getText().toUpperCase());
-                prepStatement.setString(3, txtJob.getText().toUpperCase());
-                prepStatement.setInt(4, Integer.parseInt(cmbGen.getSelectedItem().toString()));
-                prepStatement.setString(5, ftxtHiredate.getText());
-                prepStatement.setInt(6, Integer.parseInt(txtSalary.getText()));
-                prepStatement.setInt(7, Integer.parseInt(txtComm.getText()));
-                prepStatement.setInt(8, Integer.parseInt(cmbPreEv.getSelectedItem().toString()));
+                //prepStatement.setInt(1, Integer.parseInt(txtPokedexID.getText()));
+                //prepStatement.setString(2, txtName.getText().toUpperCase());
+                //prepStatement.setString(3, txtJob.getText().toUpperCase());
+                //prepStatement.setInt(4, Integer.parseInt(cmbGen.getSelectedItem().toString()));
+                //prepStatement.setString(5, ftxtHiredate.getText());
+                //prepStatement.setInt(6, Integer.parseInt(txtSalary.getText()));
+                //prepStatement.setInt(7, Integer.parseInt(txtComm.getText()));
+                //prepStatement.setInt(8, Integer.parseInt(cmbPreEv.getSelectedItem().toString()));
                 int result = prepStatement.executeUpdate();
                 if (result > 0) {
 
-                    javax.swing.JLabel label = new javax.swing.JLabel("New employee added successfully.");
+                    javax.swing.JLabel label = new javax.swing.JLabel("New pokemon added successfully.");
                     label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
                     JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
 
