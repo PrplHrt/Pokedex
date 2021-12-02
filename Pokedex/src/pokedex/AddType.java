@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class AddType extends javax.swing.JFrame {
 
     /**
-     * Creates new form AddEmployee
+     * Creates new form AddType
      */
     Connection con;
     Statement statement;
@@ -47,7 +47,8 @@ public class AddType extends javax.swing.JFrame {
                 cmbPwrAgnst.addItem(rs.getString("name"));
             }
             //exists incase the type desiered was not in the table, then the type can be added and this value can me modified in update/delete menu
-            cmbPwrAgnst.addItem("null");
+            //yet to know if it works: null vs "null"
+            cmbPwrAgnst.addItem(null);
         }
         catch (SQLException e) {
             javax.swing.JLabel label = new javax.swing.JLabel("SQL Error - Display selected empno.");
@@ -122,15 +123,8 @@ public class AddType extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(183, 183, 183))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(205, 205, 205)
-                        .addComponent(btnAddNewType))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(77, 77, 77)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -148,8 +142,14 @@ public class AddType extends javax.swing.JFrame {
                         .addGap(68, 68, 68)
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addComponent(cmbGen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbGen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAddNewType, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(12, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(183, 183, 183))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,9 +170,9 @@ public class AddType extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(cmbGen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(btnAddNewType)
-                .addGap(51, 51, 51))
+                .addGap(33, 33, 33)
+                .addComponent(btnAddNewType, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         pack();
@@ -269,7 +269,7 @@ public class AddType extends javax.swing.JFrame {
             if (isValidData()) {
                 prepStatement = con.prepareStatement("INSERT INTO Type (name, generation, powerful_against) VALUES (? , ? , ?)");
                 prepStatement.setString(1, txtTypeName.getText().toUpperCase());
-                prepStatement.setString(2, cmbGen.getSelectedItem().toString() );
+                prepStatement.setString(2, cmbGen.getSelectedItem().toString());
                 prepStatement.setString(3 , cmbPwrAgnst.getSelectedItem().toString());
                 
                 int result = prepStatement.executeUpdate();
