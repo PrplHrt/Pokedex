@@ -63,10 +63,15 @@ public class AddPokemon extends javax.swing.JFrame {
                 cmbPreEv.addItem(rs.getString("pokedexID"));
             }
             
-            // get and populate valid generations
-            for(String gen: generations){
-                
-            }
+            //populate generation combo box 
+            cmbGen.addItem("I");
+            cmbGen.addItem("II");
+            cmbGen.addItem("III");
+            cmbGen.addItem("IV");
+            cmbGen.addItem("V");
+            cmbGen.addItem("VI");
+            cmbGen.addItem("VII");
+            cmbGen.addItem("VIII");
 
             rs.close();
             statement.close();
@@ -269,16 +274,7 @@ public class AddPokemon extends javax.swing.JFrame {
             return false;
         }
     }
-
-    public boolean isDouble(String s) {
-        try {
-            Double.parseDouble(s);
-            return true;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-    }
-
+    
     void clearErrorLabels() {
         lblIDError.setText("");
         lblIDError.setVisible(false);
@@ -288,9 +284,10 @@ public class AddPokemon extends javax.swing.JFrame {
         lblTypeError.setVisible(false);
     }
 
-    boolean isValidData() {
+    boolean isValidData() throws SQLException {
 
         clearErrorLabels();
+        statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         boolean result = true;
         if (txtPokedexID.getText().trim().isEmpty() || !isInteger(txtPokedexID.getText().trim())) {
             if (txtPokedexID.getText().trim().isEmpty()) {
@@ -301,15 +298,28 @@ public class AddPokemon extends javax.swing.JFrame {
 
             lblIDError.setVisible(true);
             result = false;
+        } else {
+            try {
+                rs = statement.executeQuery("SELECT * FROM pokemon WHERE pokedexID = " + txtPokedexID.getText().trim());
+                if(rs.isBeforeFirst()){
+                    lblIDError.setText("Invalid. ID must be unique.");
+                    lblIDError.setVisible(true);
+                    result = false;
+                }
+                rs.close();
+                statement.close();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }   
         }
+        
 
-        if (txtName.getText().trim().isEmpty() || (txtName.getText().trim().length() > 10)) {
+        if (txtName.getText().trim().isEmpty() || (txtName.getText().trim().length() > 30)) {
             if (txtName.getText().trim().isEmpty()) {
                 lblNameError.setText("Invalid. Cannot be empty.");
-            } else if ((txtName.getText().trim().length() > 10)) {
-                lblNameError.setText("Invalid. Must be < 10 chars.");
+            } else if ((txtName.getText().trim().length() > 30)) {
+                lblNameError.setText("Invalid. Must be <= 30 chars.");
             }
-
             lblNameError.setVisible(true);
             result = false;
         }
@@ -335,22 +345,42 @@ public class AddPokemon extends javax.swing.JFrame {
             statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             if (isValidData()) {
-                prepStatement = con.prepareStatement("INSERT INTO emp (empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES (? , ? , ?, ? , ? , ?, ?, ?)");
-                //prepStatement.setInt(1, Integer.parseInt(txtPokedexID.getText()));
-                //prepStatement.setString(2, txtName.getText().toUpperCase());
-                //prepStatement.setString(3, txtJob.getText().toUpperCase());
-                //prepStatement.setInt(4, Integer.parseInt(cmbGen.getSelectedItem().toString()));
-                //prepStatement.setString(5, ftxtHiredate.getText());
-                //prepStatement.setInt(6, Integer.parseInt(txtSalary.getText()));
-                //prepStatement.setInt(7, Integer.parseInt(txtComm.getText()));
-                //prepStatement.setInt(8, Integer.parseInt(cmbPreEv.getSelectedItem().toString()));
+                prepStatement = con.prepareStatement("INSERT INTO pokemon (pokedexID, name, generation, region, pre-evolution) VALUES (? , ? , ?, ? , ? )");
+                prepStatement.setInt(1, Integer.parseInt(txtPokedexID.getText()));
+                prepStatement.setString(2, txtName.getText().toUpperCase());
+                prepStatement.setString(3, cmbGen.getSelectedItem().toString());
+                prepStatement.setString(4, cmbReg.getSelectedItem().toString());
+                prepStatement.setInt(5, Integer.parseInt(cmbPreEv.getSelectedItem().toString()));
                 int result = prepStatement.executeUpdate();
                 if (result > 0) {
 
                     javax.swing.JLabel label = new javax.swing.JLabel("New pokemon added successfully.");
                     label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
                     JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-
+                    
+                    
+                    prepStatement.close();
+                    prepStatement = con.prepareStatement("INSERT INTO pokemon_types (pokedexID, type_name) VALUES (? , ?)");
+                    
+                    prepStatement.setInt(1, Integer.parseInt(txtPokedexID.getText()));
+                    prepStatement.setString(2, cmbType1.getSelectedItem().toString());
+                    int result2 = prepStatement.executeUpdate();
+                    if(result2 <= 0){
+                        javax.swing.JLabel label1 = new javax.swing.JLabel("New type NOT added successfully.");
+                        label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+                        JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    
+                    if(!cmbType1.getSelectedItem().toString().equals(cmbType2.getSelectedItem().toString()) || cmbType2.getSelectedIndex() != 0){
+                        prepStatement.setString(2, cmbType2.getSelectedItem().toString());
+                        int result3 = prepStatement.executeUpdate();
+                        if(result3 <= 0){
+                            javax.swing.JLabel label2 = new javax.swing.JLabel("Second type NOT added successfully.");
+                            label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+                            JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    }
+                    
                     clearInputBoxes();
                 } else {
                     // check validation errors 
