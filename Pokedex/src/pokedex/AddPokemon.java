@@ -1,22 +1,64 @@
+package pokedex;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pokedex;
-
 /**
  *
- * @author Eyad Abdelazim
+ * @author wissam
  */
 public class AddPokemon extends javax.swing.JFrame {
 
     /**
-     * Creates new form AddPokemon
+     * Creates new form AddEmployee
      */
-    public AddPokemon() {
+    Connection con;
+    Statement statement;
+    PreparedStatement prepStatement;
+    ResultSet rs;
+
+    public AddPokemon(myDBCon connect) {
         initComponents();
-         
+        con = connect.getCon();
+        // center form in screen 
+        this.setLocationRelativeTo(null);
+        // set all error labels to invisible
+        lblIDError.setVisible(false);
+        lblNameError.setVisible(false);
+        lblTypeError.setVisible(false);
+        //populate mgr and deptno combo boxes 
+        try {
+            // make the result set scrolable forward/backward updatable
+            statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            // populate valid mgr numbers 
+            rs = statement.executeQuery("SELECT empno FROM emp ORDER BY empno ASC");
+            // populate mgr combo box
+            while (rs.next()) {
+                cmbGen.addItem(rs.getString("empno"));
+            }
+
+            // get and populate valid department numbers 
+            rs = statement.executeQuery("SELECT DISTINCT deptno, dname FROM dept ORDER BY deptno ASC");
+            while (rs.next()) {
+                cmbPreEv.addItem(rs.getString("deptno"));
+            }
+
+            rs.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
     }
 
     /**
@@ -33,219 +75,308 @@ public class AddPokemon extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        PokemonNameText = new javax.swing.JTextField();
-        PokedexIDText = new javax.swing.JTextField();
-        Type1Combo = new javax.swing.JComboBox<>();
-        Type2Combo = new javax.swing.JComboBox<>();
-        RegionCombo = new javax.swing.JComboBox<>();
-        PreEvolutionCombo = new javax.swing.JComboBox<>();
-        jLabel8 = new javax.swing.JLabel();
-        GenCombo = new javax.swing.JComboBox<>();
-        AddButton = new javax.swing.JButton();
-        IDError = new javax.swing.JLabel();
-        NameError = new javax.swing.JLabel();
-        TypeError = new javax.swing.JLabel();
-        GenError = new javax.swing.JLabel();
-        RegionError = new javax.swing.JLabel();
-        PreEvError = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        txtPokedexID = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
+        cmbGen = new javax.swing.JComboBox<>();
+        cmbPreEv = new javax.swing.JComboBox<>();
+        btnAddNewPokemon = new javax.swing.JButton();
+        lblIDError = new javax.swing.JLabel();
+        lblTypeError = new javax.swing.JLabel();
+        lblNameError = new javax.swing.JLabel();
+        cmbType1 = new javax.swing.JComboBox<>();
+        cmbType2 = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        cmbReg = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Add New Pokemon");
+        setTitle("Add New Employee");
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("Add New Pokemon");
 
-        jLabel2.setText("Name:");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setText("PokedexID:");
 
-        jLabel3.setText("Pokedex ID:");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setText("Name:");
 
-        jLabel4.setText("Region:");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setText("Type 1:");
 
-        jLabel5.setText("Pre-evolution:");
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel5.setText("Generation:");
 
-        jLabel6.setText("Type 2:");
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel9.setText("Pre-Evolution:");
 
-        jLabel7.setText("Type 1:");
+        txtPokedexID.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        PokemonNameText.addActionListener(new java.awt.event.ActionListener() {
+        txtName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        cmbGen.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        cmbPreEv.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        btnAddNewPokemon.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        btnAddNewPokemon.setText("Add New");
+        btnAddNewPokemon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PokemonNameTextActionPerformed(evt);
+                btnAddNewPokemonActionPerformed(evt);
             }
         });
 
-        PokedexIDText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PokedexIDTextActionPerformed(evt);
-            }
-        });
+        lblIDError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblIDError.setForeground(new java.awt.Color(255, 0, 0));
+        lblIDError.setText("error label");
 
-        Type1Combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        lblTypeError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblTypeError.setForeground(new java.awt.Color(255, 0, 0));
+        lblTypeError.setText("error label");
 
-        Type2Combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        Type2Combo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Type2ComboActionPerformed(evt);
-            }
-        });
+        lblNameError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblNameError.setForeground(new java.awt.Color(255, 0, 0));
+        lblNameError.setText("error label");
 
-        RegionCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbType1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        PreEvolutionCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbType2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        jLabel8.setText("Generation:");
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel10.setText("Type 2:");
 
-        GenCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel11.setText("Region:");
 
-        AddButton.setText("Add");
-
-        IDError.setForeground(new java.awt.Color(255, 0, 0));
-        IDError.setText("ERROR");
-
-        NameError.setForeground(new java.awt.Color(255, 0, 0));
-        NameError.setText("ERROR");
-
-        TypeError.setForeground(new java.awt.Color(255, 0, 0));
-        TypeError.setText("ERROR");
-
-        GenError.setForeground(new java.awt.Color(255, 0, 0));
-        GenError.setText("ERROR");
-
-        RegionError.setForeground(new java.awt.Color(255, 0, 0));
-        RegionError.setText("ERROR");
-
-        PreEvError.setForeground(new java.awt.Color(255, 0, 0));
-        PreEvError.setText("ERROR");
+        cmbReg.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(149, 149, 149)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtPokedexID, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                        .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                        .addComponent(cmbGen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cmbType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel10)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cmbType2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cmbPreEv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(132, 132, 132))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbReg, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(PreEvolutionCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(GenCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(PokemonNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(PokedexIDText)
-                            .addComponent(Type1Combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Type2Combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(RegionCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(PreEvError)
-                                .addGap(73, 73, 73)
-                                .addComponent(AddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(TypeError, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(IDError, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(NameError, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(GenError)
-                            .addComponent(RegionError))
-                        .addGap(27, 27, 27))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(lblNameError, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                .addComponent(lblTypeError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblIDError, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))))
+                .addContainerGap(97, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(223, 223, 223)
+                .addComponent(btnAddNewPokemon)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7, jLabel8});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PokedexIDText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(IDError))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PokemonNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(NameError))
+                    .addComponent(jLabel2)
+                    .addComponent(txtPokedexID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblIDError))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Type1Combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TypeError))
+                    .addComponent(jLabel3)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNameError))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Type2Combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel4)
+                    .addComponent(cmbType1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(GenCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(GenError))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel10)
+                    .addComponent(cmbType2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTypeError))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(RegionCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(RegionError))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel5)
+                    .addComponent(cmbGen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PreEvolutionCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AddButton)
-                    .addComponent(PreEvError))
-                .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(jLabel11)
+                    .addComponent(cmbReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbPreEv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addGap(24, 24, 24)
+                .addComponent(btnAddNewPokemon)
+                .addGap(0, 17, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void PokemonNameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PokemonNameTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PokemonNameTextActionPerformed
+    public boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
 
-    private void PokedexIDTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PokedexIDTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PokedexIDTextActionPerformed
+    public boolean isDouble(String s) {
+        try {
+            Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
 
-    private void Type2ComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Type2ComboActionPerformed
+    void clearErrorLabels() {
+        lblIDError.setText("");
+        lblIDError.setVisible(false);
+        lblNameError.setText("");
+        lblNameError.setVisible(false);
+        lblTypeError.setText("");
+        lblTypeError.setVisible(false);
+    }
+
+    boolean isValidData() {
+
+        clearErrorLabels();
+        boolean result = true;
+        if (txtPokedexID.getText().trim().isEmpty() || !isInteger(txtPokedexID.getText().trim())) {
+            if (txtPokedexID.getText().trim().isEmpty()) {
+                lblIDError.setText("Invalid. Cannot be empty.");
+            } else if (!isInteger(txtPokedexID.getText().trim())) {
+                lblIDError.setText("Invalid. Must be integer.");
+            }
+
+            lblIDError.setVisible(true);
+            result = false;
+        }
+
+        if (txtName.getText().trim().isEmpty() || (txtName.getText().trim().length() > 10)) {
+            if (txtName.getText().trim().isEmpty()) {
+                lblNameError.setText("Invalid. Cannot be empty.");
+            } else if ((txtName.getText().trim().length() > 10)) {
+                lblNameError.setText("Invalid. Must be < 10 chars.");
+            }
+
+            lblNameError.setVisible(true);
+            result = false;
+        }
+
+        return result;
+    }
+
+    void clearInputBoxes() {
+        txtPokedexID.setText("");
+        txtName.setText("");
+        cmbPreEv.setSelectedIndex(0);
+        cmbGen.setSelectedIndex(0);
+        cmbType1.setSelectedIndex(0);
+        cmbType2.setSelectedIndex(0);
+        cmbReg.setSelectedIndex(0);
+    }
+
+    private void btnAddNewPokemonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewPokemonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_Type2ComboActionPerformed
+
+        try {
+            // make the result set scrolable forward/backward updatable
+            statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+
+            if (isValidData()) {
+                prepStatement = con.prepareStatement("INSERT INTO emp (empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES (? , ? , ?, ? , ? , ?, ?, ?)");
+                prepStatement.setInt(1, Integer.parseInt(txtPokedexID.getText()));
+                prepStatement.setString(2, txtName.getText().toUpperCase());
+                prepStatement.setString(3, txtJob.getText().toUpperCase());
+                prepStatement.setInt(4, Integer.parseInt(cmbGen.getSelectedItem().toString()));
+                prepStatement.setString(5, ftxtHiredate.getText());
+                prepStatement.setInt(6, Integer.parseInt(txtSalary.getText()));
+                prepStatement.setInt(7, Integer.parseInt(txtComm.getText()));
+                prepStatement.setInt(8, Integer.parseInt(cmbPreEv.getSelectedItem().toString()));
+                int result = prepStatement.executeUpdate();
+                if (result > 0) {
+
+                    javax.swing.JLabel label = new javax.swing.JLabel("New employee added successfully.");
+                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+                    JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+
+                    clearInputBoxes();
+                } else {
+                    // check validation errors 
+                }
+
+                rs.close();
+                statement.close();
+                prepStatement.close();
+            } else {
+
+                javax.swing.JLabel label = new javax.swing.JLabel("Please fix validation errors...");
+                label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+                JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
+
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error adding new employee.");
+        }
+    }//GEN-LAST:event_btnAddNewPokemonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AddButton;
-    private javax.swing.JComboBox<String> GenCombo;
-    private javax.swing.JLabel GenError;
-    private javax.swing.JLabel IDError;
-    private javax.swing.JLabel NameError;
-    private javax.swing.JTextField PokedexIDText;
-    private javax.swing.JTextField PokemonNameText;
-    private javax.swing.JLabel PreEvError;
-    private javax.swing.JComboBox<String> PreEvolutionCombo;
-    private javax.swing.JComboBox<String> RegionCombo;
-    private javax.swing.JLabel RegionError;
-    private javax.swing.JComboBox<String> Type1Combo;
-    private javax.swing.JComboBox<String> Type2Combo;
-    private javax.swing.JLabel TypeError;
+    private javax.swing.JButton btnAddNewPokemon;
+    private javax.swing.JComboBox<String> cmbGen;
+    private javax.swing.JComboBox<String> cmbPreEv;
+    private javax.swing.JComboBox<String> cmbReg;
+    private javax.swing.JComboBox<String> cmbType1;
+    private javax.swing.JComboBox<String> cmbType2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lblIDError;
+    private javax.swing.JLabel lblNameError;
+    private javax.swing.JLabel lblTypeError;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPokedexID;
     // End of variables declaration//GEN-END:variables
 }
