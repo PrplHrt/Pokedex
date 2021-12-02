@@ -73,11 +73,8 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lblNameError" alignment="0" pref="150" max="32767" attributes="0"/>
-                              <Component id="lblTypeError" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="lblIDError" pref="150" max="32767" attributes="0"/>
+                          <Component id="lblNameError" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                          <Component id="lblIDError" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -115,7 +112,6 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cmbType2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblTypeError" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -240,17 +236,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblIDError">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="18" style="2"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="0" green="0" red="ff" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="error label"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblTypeError">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="18" style="2"/>

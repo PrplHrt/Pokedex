@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 public class AddPokemon extends javax.swing.JFrame {
 
     /**
-     * Creates new form AddEmployee
+     * Creates new form AddPokemon
      */
     Connection con;
     Statement statement;
@@ -36,12 +36,11 @@ public class AddPokemon extends javax.swing.JFrame {
         // set all error labels to invisible
         lblIDError.setVisible(false);
         lblNameError.setVisible(false);
-        lblTypeError.setVisible(false);
         //populate Gen, Reg, Pre-Ev, and Type combo boxes 
         try {
             // make the result set scrolable forward/backward updatable
             statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            // populate valid mgr numbers 
+            // populate valid Type numbers 
             rs = statement.executeQuery("SELECT name FROM type ORDER BY name ASC");
             // populate Type combo boxes
             // Adding null to allow just 1 Type to be selected
@@ -52,12 +51,14 @@ public class AddPokemon extends javax.swing.JFrame {
             }
             
             // get and populate valid regions 
+            cmbReg.addItem(null);
             rs = statement.executeQuery("SELECT name FROM region ORDER BY name ASC");
             while (rs.next()) {
                 cmbReg.addItem(rs.getString("name"));
             }
             
             // get and populate valid Pre-evolutions 
+            cmbPreEv.addItem(null);
             rs = statement.executeQuery("SELECT pokedexID FROM pokemon ORDER BY pokedexID ASC");
             while (rs.next()) {
                 cmbPreEv.addItem(rs.getString("pokedexID"));
@@ -102,7 +103,6 @@ public class AddPokemon extends javax.swing.JFrame {
         cmbPreEv = new javax.swing.JComboBox<>();
         btnAddNewPokemon = new javax.swing.JButton();
         lblIDError = new javax.swing.JLabel();
-        lblTypeError = new javax.swing.JLabel();
         lblNameError = new javax.swing.JLabel();
         cmbType1 = new javax.swing.JComboBox<>();
         cmbType2 = new javax.swing.JComboBox<>();
@@ -150,10 +150,6 @@ public class AddPokemon extends javax.swing.JFrame {
         lblIDError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         lblIDError.setForeground(new java.awt.Color(255, 0, 0));
         lblIDError.setText("error label");
-
-        lblTypeError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
-        lblTypeError.setForeground(new java.awt.Color(255, 0, 0));
-        lblTypeError.setText("error label");
 
         lblNameError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         lblNameError.setForeground(new java.awt.Color(255, 0, 0));
@@ -213,10 +209,8 @@ public class AddPokemon extends javax.swing.JFrame {
                                 .addComponent(cmbReg, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lblNameError, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                .addComponent(lblTypeError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(lblIDError, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))))
+                            .addComponent(lblNameError, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblIDError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(97, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(223, 223, 223)
@@ -244,8 +238,7 @@ public class AddPokemon extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(cmbType2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTypeError))
+                    .addComponent(cmbType2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -280,8 +273,6 @@ public class AddPokemon extends javax.swing.JFrame {
         lblIDError.setVisible(false);
         lblNameError.setText("");
         lblNameError.setVisible(false);
-        lblTypeError.setText("");
-        lblTypeError.setVisible(false);
     }
 
     boolean isValidData() throws SQLException {
@@ -420,7 +411,6 @@ public class AddPokemon extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lblIDError;
     private javax.swing.JLabel lblNameError;
-    private javax.swing.JLabel lblTypeError;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPokedexID;
     // End of variables declaration//GEN-END:variables
