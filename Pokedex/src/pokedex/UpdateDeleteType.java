@@ -301,13 +301,13 @@ public class UpdateDeleteType extends javax.swing.JFrame {
        
         try {
             
-            rs = statement.executeQuery("Select * from move where move_type = '" + txtTypeName.getText().trim() + "'");
+            rs = statement.executeQuery("Select * from move where move_type = '" + txtTypeName.getText().trim().toUpperCase() + "'");
             if (rs.isBeforeFirst()) {
                 JOptionPane.showMessageDialog(null, "Error: There are moves of this type.");
                 return;
             }
             
-            rs = statement.executeQuery("Select * from pokemon_types where type_name = '" + txtTypeName.getText().trim() +"'");
+            rs = statement.executeQuery("Select * from pokemon_types where type_name = '" + txtTypeName.getText().trim().toUpperCase() +"'");
             if (rs.isBeforeFirst()) {
                 JOptionPane.showMessageDialog(null, "Error: There are Pokemon of this type.");
                 return;
@@ -382,7 +382,7 @@ public class UpdateDeleteType extends javax.swing.JFrame {
         try {
             
             if (isValidData()) {
-                prepStatement = con.prepareStatement("UPDATE type SET generation = ?, powerful_against = ? WHERE name = '" + txtTypeName.getText().trim() + "'");
+                prepStatement = con.prepareStatement("UPDATE type SET generation = ?, powerful_against = ? WHERE name = '" + txtTypeName.getText().trim().toUpperCase() + "'");
 
                 prepStatement.setString(1, cmbGen.getSelectedItem().toString());
                 prepStatement.setString(2, cmbPwrAgnst.getSelectedItem().toString());

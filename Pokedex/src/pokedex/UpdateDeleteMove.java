@@ -287,7 +287,7 @@ public class UpdateDeleteMove extends javax.swing.JFrame {
        
         try {
             
-            rs = statement.executeQuery("Select * from moves_learnt where move_name = '" + txtMoveName.getText().trim() +"'");
+            rs = statement.executeQuery("Select * from moves_learnt where move_name = '" + txtMoveName.getText().trim().toUpperCase() +"'");
             if (rs.isBeforeFirst()) {
                 JOptionPane.showMessageDialog(null, "Error: There are Pokemon that learnt this move.");
                 return;
