@@ -11,29 +11,28 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
-public class UpdateDeleteType extends javax.swing.JFrame {
+public class UpdateDeleteMove extends javax.swing.JFrame {
 
     Connection con;
     Statement statement;
     Statement statement2;
     PreparedStatement prepStatement;
     ResultSet rs;
- 
+    ResultSet rstypes;
     
-
+  
     /**
      * Creates new form AddEmployee
      */
-    public UpdateDeleteType(myDBCon connect) {
+    public UpdateDeleteMove(myDBCon connect) {
         initComponents();
         con = connect.getCon();
         this.setLocationRelativeTo(null);
 
+        lblMovePPError.setVisible(false);
         
-        lblPwrAgnstError.setVisible(false);
+
         
-        
-       
         try {
             // make the result set scrolable forward/backward updatable
             statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -50,30 +49,22 @@ public class UpdateDeleteType extends javax.swing.JFrame {
 
         try {
             String str;
-            
-            cmbGen.addItem("I");
-            cmbGen.addItem("II");
-            cmbGen.addItem("III");
-            cmbGen.addItem("IV");
-            cmbGen.addItem("V");
-            cmbGen.addItem("VI");
-            cmbGen.addItem("VII");
-            cmbGen.addItem("VIII");
-          
-            // populate powerful_against field
-            rs = statement.executeQuery("SELECT name, generation, powerful_against FROM type ORDER BY name ASC ");
-            cmbPwrAgnst.removeAllItems();
-            while (rs.next()) {
-                cmbPwrAgnst.addItem(rs.getString("powerful_against"));
+            // populate type field
+            rstypes = statement.executeQuery("SELECT name FROM type");
+            cmbType.removeAllItems();
+            while (rstypes.next()) {
+                cmbType.addItem(rstypes.getString("name"));
             }
-            
 
+        
+            rs = statement.executeQuery("SELECT name, powerpoints, move_type FROM move ORDER BY name ASC ");
+          
             // populate rest of fields
             rs.beforeFirst();
             rs.first();
             populateFields();
         } catch (SQLException e) {
-            javax.swing.JLabel label = new javax.swing.JLabel("SQL Error - Display selected name.");
+            javax.swing.JLabel label = new javax.swing.JLabel("SQL Error - Display selected move.");
             label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
             JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
@@ -89,33 +80,23 @@ public class UpdateDeleteType extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnNext = new javax.swing.JButton();
         btnPrevious = new javax.swing.JButton();
-        cmbGen = new javax.swing.JComboBox<>();
-        cmbPwrAgnst = new javax.swing.JComboBox<>();
-        lblPwrAgnstError = new javax.swing.JLabel();
-        txtTypeName = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txtMoveName = new javax.swing.JTextField();
+        lblMovePPError = new javax.swing.JLabel();
+        txtMovePP = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        cmbType = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Update/Delete Employee");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 222, 0));
-        jLabel1.setText("Update/Delete Type");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setText("Type Name:");
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setText("Powerful against:");
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setText("Generation added:");
+        jLabel1.setText("Update/Delete Move");
 
         btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnUpdate.setText("Update");
@@ -149,17 +130,25 @@ public class UpdateDeleteType extends javax.swing.JFrame {
             }
         });
 
-        cmbGen.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setText("PowerPoints:");
 
-        cmbPwrAgnst.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setText("Move Type:");
 
-        lblPwrAgnstError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
-        lblPwrAgnstError.setForeground(new java.awt.Color(255, 0, 0));
-        lblPwrAgnstError.setText("error label");
+        txtMoveName.setEditable(false);
+        txtMoveName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        txtTypeName.setEditable(false);
-        txtTypeName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtTypeName.setPreferredSize(new java.awt.Dimension(72, 28));
+        lblMovePPError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblMovePPError.setForeground(new java.awt.Color(255, 0, 0));
+        lblMovePPError.setText("error label");
+
+        txtMovePP.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setText("Move Name:");
+
+        cmbType.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -168,63 +157,58 @@ public class UpdateDeleteType extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(cmbGen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(7, 7, 7)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnPrevious)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnUpdate)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnDelete)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnNext))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel3))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(cmbPwrAgnst, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(txtTypeName, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(lblPwrAgnstError, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGap(123, 123, 123)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(140, 140, 140)
-                        .addComponent(jLabel1)))
-                .addContainerGap(66, Short.MAX_VALUE))
+                        .addGap(48, 48, 48)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMoveName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtMovePP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblMovePPError, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(btnPrevious)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnUpdate)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnNext)))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTypeName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel2)
+                    .addComponent(txtMoveName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbPwrAgnst, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(lblPwrAgnstError))
-                .addGap(18, 18, 18)
+                    .addComponent(txtMovePP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMovePPError))
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(cmbGen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52)
+                    .addComponent(cmbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUpdate)
                     .addComponent(btnDelete)
                     .addComponent(btnNext)
                     .addComponent(btnPrevious))
-                .addGap(0, 47, Short.MAX_VALUE))
+                .addGap(0, 43, Short.MAX_VALUE))
         );
 
         pack();
@@ -232,13 +216,13 @@ public class UpdateDeleteType extends javax.swing.JFrame {
 
     private void populateFields() {
         try {
-            txtTypeName.setText(rs.getString("name"));
-            cmbGen.setSelectedItem(rs.getString("generation"));    
-            cmbPwrAgnst.setSelectedItem(rs.getString("powerful_against"));
-
+            txtMoveName.setText(rs.getString("name"));
+            txtMovePP.setText(rs.getString("powerpoints"));
+            cmbType.setSelectedItem(rs.getString("move_type"));
+          
             EnableDisableButtons();
         } catch (SQLException ex) {
-            Logger.getLogger(UpdateDeleteType.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateDeleteMove.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -253,7 +237,7 @@ public class UpdateDeleteType extends javax.swing.JFrame {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UpdateDeleteType.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateDeleteMove.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
@@ -270,7 +254,7 @@ public class UpdateDeleteType extends javax.swing.JFrame {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UpdateDeleteType.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateDeleteMove.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -287,7 +271,7 @@ public class UpdateDeleteType extends javax.swing.JFrame {
                 btnNext.setEnabled(true);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UpdateDeleteType.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateDeleteMove.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -295,33 +279,29 @@ public class UpdateDeleteType extends javax.swing.JFrame {
         // TODO add your handling code here:
         MovePrevious();
     }//GEN-LAST:event_btnPreviousActionPerformed
-   
+    
+
+    // Eyad - Need to change this to add a CONFIRM message dialogue; similar to btnUpdateActionPerformed() could just add a confrim function
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        
+        // TODO add your handling code here:
        
         try {
             
-            rs = statement.executeQuery("Select * from move where move_type = '" + txtTypeName.getText().trim() + "'");
+            rs = statement.executeQuery("Select * from moves_learnt where move_name = '" + txtMoveName.getText().trim() +"'");
             if (rs.isBeforeFirst()) {
-                JOptionPane.showMessageDialog(null, "Error: There are moves of this type.");
+                JOptionPane.showMessageDialog(null, "Error: There are Pokemon that learnt this move.");
                 return;
             }
             
-            rs = statement.executeQuery("Select * from pokemon_types where type_name = '" + txtTypeName.getText().trim() +"'");
-            if (rs.isBeforeFirst()) {
-                JOptionPane.showMessageDialog(null, "Error: There are Pokemon of this type.");
-                return;
-            }
             
-
             // make the result set scrolable forward/backward updatable
-            prepStatement = con.prepareStatement("DELETE type WHERE name = '" + txtTypeName.getText().trim() + "'");
+            prepStatement = con.prepareStatement("DELETE move WHERE name = " + txtMoveName.getText().trim());
             // Using JOptionPane Confirm Dialog to confirm the action
-            int confirmAction = JOptionPane.showConfirmDialog(this,String.format("Confirm delete of type: %s?", txtTypeName.getText().trim()));
+            int confirmAction = JOptionPane.showConfirmDialog(this,String.format("Confirm delete of move: %s?", txtMoveName.getText().trim()));
             if (confirmAction == JOptionPane.YES_OPTION){
                 int result = prepStatement.executeUpdate();
                 if (result > 0) {
-                    javax.swing.JLabel label = new javax.swing.JLabel("Type " + txtTypeName.getText().trim() + " deleted successfully.");
+                    javax.swing.JLabel label = new javax.swing.JLabel(txtMoveName.getText().trim() + " deleted successfully.");
                     label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
                     JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
                     getNewData();
@@ -330,18 +310,16 @@ public class UpdateDeleteType extends javax.swing.JFrame {
             prepStatement.close();
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error deleting type.");
+            JOptionPane.showMessageDialog(null, "Error deleting move.");
 
         }
 
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     void clearErrorLabels() {
+        lblMovePPError.setText("");
         
-        lblPwrAgnstError.setText("");
-        lblPwrAgnstError.setVisible(false);
-        
-        }
+    }
 
     public boolean isInteger(String s) {
         try {
@@ -365,35 +343,44 @@ public class UpdateDeleteType extends javax.swing.JFrame {
 
         clearErrorLabels();
         boolean result = true;
-        
-       //verifying that the powerful against value is not equal to the name value
-       if (cmbPwrAgnst.getSelectedItem().toString().equals(txtTypeName.getText().trim())){
-           lblPwrAgnstError.setText("Invalid. Type cannot be powerful against itself.");
-           lblPwrAgnstError.setVisible(true);
-           result = false;
-       }
+         
+
+        if (txtMovePP.getText().trim().isEmpty() || !(isInteger(txtMovePP.getText().trim()) || isDouble(txtMovePP.getText().trim()))) {
+            if (txtMovePP.getText().trim().isEmpty()) {
+                lblMovePPError.setText("Invalid. Cannot be empty.");
+            } else if (!(isInteger(txtMovePP.getText().trim()) || isDouble(txtMovePP.getText().trim()))) {
+                lblMovePPError.setText("Invalid. Must be number.");
+            }
+
+            lblMovePPError.setVisible(true);
+            result = false;
+        }
+
+
 
         return result;
     }
-    // Eyad - Need to change this to add a CONFIRM message dialogue; similar to btnDeleteActionPerformed() could just add a confrim function
+   
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
 
         try {
-            
-            if (isValidData()) {
-                prepStatement = con.prepareStatement("UPDATE type SET generation = ?, powerful_against = ? WHERE name = '" + txtTypeName.getText().trim() + "'");
+            // make the result set scrolable forward/backward updatable
+//            statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-                prepStatement.setString(1, cmbGen.getSelectedItem().toString());
-                prepStatement.setString(2, cmbPwrAgnst.getSelectedItem().toString());
-               
+            if (isValidData()) {
+                prepStatement = con.prepareStatement("UPDATE move SET powerpoints = ?, move_type = ? WHERE name = ?");
+                prepStatement.setInt(1, Integer.parseInt(txtMovePP.getText()));
+                prepStatement.setString(2, cmbType.getSelectedItem().toString());
+                prepStatement.setString(3, txtMoveName.getText().toUpperCase());
+                
                 // Using JOptionPane Confirm Dialog to confirm the action
                 int confirmAction = JOptionPane.showConfirmDialog(this,"Confirm update?");
                 if (confirmAction == JOptionPane.YES_OPTION){
                     int result = prepStatement.executeUpdate();
                     if (result > 0) {
 
-                        javax.swing.JLabel label = new javax.swing.JLabel("Type " + txtTypeName.getText() + " updated successfully.");
+                        javax.swing.JLabel label = new javax.swing.JLabel(txtMoveName.getText() + " updated successfully.");
                         label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
                         JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
 
@@ -415,7 +402,7 @@ public class UpdateDeleteType extends javax.swing.JFrame {
 
         } catch (SQLException e) {
 
-            JOptionPane.showMessageDialog(null, "Error updating employee." + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error updating move." + e.getMessage());
 
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
@@ -426,13 +413,13 @@ public class UpdateDeleteType extends javax.swing.JFrame {
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrevious;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> cmbGen;
-    private javax.swing.JComboBox<String> cmbPwrAgnst;
+    private javax.swing.JComboBox<String> cmbType;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel lblPwrAgnstError;
-    private javax.swing.JTextField txtTypeName;
+    private javax.swing.JLabel lblMovePPError;
+    private javax.swing.JTextField txtMoveName;
+    private javax.swing.JTextField txtMovePP;
     // End of variables declaration//GEN-END:variables
 }
