@@ -62,10 +62,11 @@ public class UpdateDeleteType extends javax.swing.JFrame {
           
             // populate powerful_against field
             rs = statement.executeQuery("SELECT name, generation, powerful_against FROM type ORDER BY name ASC ");
-            cmbGen.removeAllItems();
+            cmbPwrAgnst.removeAllItems();
             while (rs.next()) {
-                cmbGen.addItem(rs.getString("powerful_against"));
+                cmbPwrAgnst.addItem(rs.getString("powerful_against"));
             }
+            
 
             // populate rest of fields
             rs.beforeFirst();

@@ -226,14 +226,12 @@ public class AddType extends javax.swing.JFrame {
        try {
            
             statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            rs = statement.executeQuery("SELECT name FROM type");
-            while (rs.next() && result == true) {
-                if (txtTypeName.getText().trim().equals(rs.getString("name"))){
-                    
-                    lblTypeNameError.setText("Invalid. Type already exists in table.");
-                    lblTypeNameError.setVisible(true);
-                    result = false;    
-                }
+            rs = statement.executeQuery("SELECT * FROM type WHERE name = '" + txtTypeName.getText().trim() + "'");
+            if (rs.isBeforeFirst()) {
+                lblTypeNameError.setText("Invalid. Type already exists in table.");
+                lblTypeNameError.setVisible(true);
+                result = false; 
+              
             }
             
             rs.close();
