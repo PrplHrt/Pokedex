@@ -1,7 +1,7 @@
 package pokedex;
 
+import java.awt.event.WindowEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -58,7 +58,13 @@ public class UpdateDeleteMove extends javax.swing.JFrame {
 
         
             rs = statement.executeQuery("SELECT name, powerpoints, move_type FROM move ORDER BY name ASC ");
-          
+            if(!rs.isBeforeFirst()){
+                javax.swing.JLabel label = new javax.swing.JLabel("Error - No moves to update/delete");
+                label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+                JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
+                this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+           
+            }
             // populate rest of fields
             rs.beforeFirst();
             rs.first();

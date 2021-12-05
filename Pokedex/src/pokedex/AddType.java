@@ -82,7 +82,6 @@ public class AddType extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add New Pokemon Type");
-        setBackground(new java.awt.Color(59, 76, 202));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 222, 0));

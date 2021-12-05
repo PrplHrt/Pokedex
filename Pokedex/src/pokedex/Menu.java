@@ -173,6 +173,7 @@ public class Menu extends JFrame {
         jMenu5.setText("Other");
         jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
 
+        jMenuItem9.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jMenuItem9.setText("Pokemon Types");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,7 +182,13 @@ public class Menu extends JFrame {
         });
         jMenu5.add(jMenuItem9);
 
+        jMenuItem10.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jMenuItem10.setText("Pokemon Moves");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem10);
 
         jMenuBar1.add(jMenu5);
@@ -293,6 +300,10 @@ public class Menu extends JFrame {
         // TODO add your handling code here:
         // (new UpdateDeleteRegion(con)).setVisible(true);
     }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
