@@ -35,7 +35,6 @@ public class Menu extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -60,8 +59,6 @@ public class Menu extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu - JDBC GUI");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jdbcgui/employees.jpg"))); // NOI18N
-
         jMenuBar1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
 
         jMenu1.setText("File");
@@ -69,7 +66,7 @@ public class Menu extends JFrame {
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jdbcgui/logout.png"))); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pokedex/logout.png"))); // NOI18N
         jMenuItem1.setText("Logout");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,7 +77,7 @@ public class Menu extends JFrame {
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/jdbcgui/close.png"))); // NOI18N
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pokedex/close.png"))); // NOI18N
         jMenuItem2.setText("Exit");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,17 +217,11 @@ public class Menu extends JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(877, Short.MAX_VALUE))
+            .addGap(0, 883, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(398, Short.MAX_VALUE))
+            .addGap(0, 404, Short.MAX_VALUE)
         );
 
         pack();
@@ -305,7 +296,6 @@ public class Menu extends JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

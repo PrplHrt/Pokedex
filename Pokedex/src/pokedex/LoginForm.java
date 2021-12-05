@@ -26,6 +26,7 @@ public class LoginForm extends javax.swing.JFrame {
     Statement statement;
     PreparedStatement prepStatement;
     ResultSet rs;
+    Menu men;
 
     /**
      * Creates new form LoginForm
@@ -152,7 +153,7 @@ public class LoginForm extends javax.swing.JFrame {
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsernameActionPerformed
-//help me
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try {
@@ -164,7 +165,8 @@ public class LoginForm extends javax.swing.JFrame {
             if(rs.isBeforeFirst()){
                 validLogin = true;
                 rs.next();
-                (new Menu(new LoginUser(rs.getString(1), rs.getString("name"), rs.getInt("type")), con)).setVisible(true);
+                men = new Menu(new LoginUser(rs.getString(1), rs.getString("name"), rs.getInt("type")), con);
+                men.setVisible(true);
                 this.dispose();
             }
             

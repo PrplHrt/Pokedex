@@ -76,7 +76,7 @@ public class UpdateDeletePokemon extends javax.swing.JFrame {
             }
             
             // populate PreEv field
-            rs = statement.executeQuery("SELECT PokedexID, name, generation, region, pre-evolution FROM pokemon ORDER BY PokedexID ASC");
+            rs = statement.executeQuery("SELECT PokedexID, name, generation, region, preevolution FROM pokemon ORDER BY PokedexID ASC");
             cmbPreEv.removeAllItems();
             while(rs.next()){
                 // Might need to get as Int
@@ -317,7 +317,7 @@ public class UpdateDeletePokemon extends javax.swing.JFrame {
             txtName.setText(rs.getString("ename"));
             cmbRegion.setSelectedItem(rs.getString("region"));
             cmbGen.setSelectedItem(rs.getString("generation"));
-            cmbPreEv.setSelectedItem(rs.getString("pre-evolution"));
+            cmbPreEv.setSelectedItem(rs.getString("preevolution"));
             
             rsType1 = statement.executeQuery("SELECT type_name FROM pokemon_types WHERE pokedexID = " + Integer.parseInt(txtPokedexID.getText().trim()));
             rsType1.next();
@@ -325,7 +325,7 @@ public class UpdateDeletePokemon extends javax.swing.JFrame {
             if(rsType1.next()){
                 cmbType2.setSelectedItem(rsType1.getString("type_name"));
             } else {
-                cmbType2.setSelectedItem(null);
+                cmbType2.setSelectedItem("null");
             }
             
             rsType1.close();
@@ -475,7 +475,7 @@ public class UpdateDeletePokemon extends javax.swing.JFrame {
 //            statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             if (isValidData()) {
-                prepStatement = con.prepareStatement("UPDATE pokemon SET name = ?, generation = ?, region = ?, pre-evolution = ? WHERE pokedexid = ?");
+                prepStatement = con.prepareStatement("UPDATE pokemon SET name = ?, generation = ?, region = ?, preevolution = ? WHERE pokedexid = ?");
 //                prepStatement.setInt(1, Integer.parseInt(txtEmpno.getText()));
                 prepStatement.setString(1, txtName.getText().toUpperCase());
                 prepStatement.setString(2, cmbGen.getSelectedItem().toString());

@@ -41,14 +41,15 @@ public class AddType extends javax.swing.JFrame {
         cmbGen.addItem("VIII");
         
         try{
+            statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
         //populate powerful_against combo box
             rs = statement.executeQuery("SELECT name FROM type");
             while (rs.next()) {
                 cmbPwrAgnst.addItem(rs.getString("name"));
             }
             //exists incase the type desiered was not in the table, then the type can be added and this value can me modified in update/delete menu
-            //yet to know if it works: null vs "null"
-            cmbPwrAgnst.addItem(null);
+            // Does not work
+            cmbPwrAgnst.addItem("null");
         }
         catch (SQLException e) {
             javax.swing.JLabel label = new javax.swing.JLabel("SQL Error - Display selected empno.");
@@ -214,7 +215,7 @@ public class AddType extends javax.swing.JFrame {
         if (txtTypeName.getText().trim().isEmpty() || (txtTypeName.getText().trim().length() > 15)) {
             if (txtTypeName.getText().trim().isEmpty()) {
                 lblTypeNameError.setText("Invalid. Cannot be empty.");
-            } else if ((txtTypeName.getText().trim().length() > 10)) {
+            } else if ((txtTypeName.getText().trim().length() > 15)) {
                 lblTypeNameError.setText("Invalid. Must be < 15 chars.");
             }
 
@@ -240,12 +241,15 @@ public class AddType extends javax.swing.JFrame {
             System.out.println(e);
         }
        
-       //verifying that the powerful against value is not equal to the name value
-       if (cmbPwrAgnst.getSelectedItem().toString().equals(txtTypeName.getText().trim())){
-           lblPwrAgnstError.setText("Invalid. Type cannot be powerful against itself.");
-           lblPwrAgnstError.setVisible(true);
-           result = false;
-       }
+
+        //verifying that the powerful against value is not equal to the name value
+         if (cmbPwrAgnst.getSelectedItem().toString().equals(txtTypeName.getText().trim())){
+             lblPwrAgnstError.setText("Invalid. Type cannot be powerful against itself.");
+             lblPwrAgnstError.setVisible(true);
+             result = false;
+         }
+
+       
 
         return result;
     }
