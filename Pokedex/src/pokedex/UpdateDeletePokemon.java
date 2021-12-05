@@ -45,6 +45,7 @@ public class UpdateDeletePokemon extends javax.swing.JFrame {
         try {
             // make the result set scrolable forward/backward updatable
             statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            statement2 = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             getNewData();
         } catch (SQLException e) {
             javax.swing.JLabel label = new javax.swing.JLabel("SQL Error - Connection error.");
@@ -59,18 +60,19 @@ public class UpdateDeletePokemon extends javax.swing.JFrame {
         try {
             String str;
             // populate Type field
-            rsType = statement.executeQuery("SELECT name FROM type ORDER BY name ASC ");
+            rsType = statement2.executeQuery("SELECT name FROM type ORDER BY name ASC ");
             cmbType1.removeAllItems();
             cmbType2.removeAllItems();
-            cmbType2.addItem(null);
+            cmbType2.addItem("null");
             while (rsType.next()) {
                 cmbType1.addItem(rsType.getString("name"));
                 cmbType2.addItem(rsType.getString("name"));
             }
 
             // populate Region field
-            rsReg = statement.executeQuery("SELECT name FROM region ORDER BY name ASC ");
+            rsReg = statement2.executeQuery("SELECT name FROM region ORDER BY name ASC ");
             cmbRegion.removeAllItems();
+            cmbRegion.addItem("null");
             while (rsReg.next()) {
                 cmbRegion.addItem(rsReg.getString("name"));
             }
@@ -78,6 +80,7 @@ public class UpdateDeletePokemon extends javax.swing.JFrame {
             // populate PreEv field
             rs = statement.executeQuery("SELECT PokedexID, name, generation, region, preevolution FROM pokemon ORDER BY PokedexID ASC");
             cmbPreEv.removeAllItems();
+            cmbPreEv.addItem("null");
             while(rs.next()){
                 // Might need to get as Int
                 cmbPreEv.addItem(rs.getString("pokedexID"));
@@ -314,12 +317,12 @@ public class UpdateDeletePokemon extends javax.swing.JFrame {
     private void populateFields() {
         try {
             txtPokedexID.setText(rs.getString("pokedexID"));
-            txtName.setText(rs.getString("ename"));
+            txtName.setText(rs.getString("name"));
             cmbRegion.setSelectedItem(rs.getString("region"));
             cmbGen.setSelectedItem(rs.getString("generation"));
             cmbPreEv.setSelectedItem(rs.getString("preevolution"));
             
-            rsType1 = statement.executeQuery("SELECT type_name FROM pokemon_types WHERE pokedexID = " + Integer.parseInt(txtPokedexID.getText().trim()));
+            rsType1 = statement2.executeQuery("SELECT type_name FROM pokemon_types WHERE pokedexID = " + Integer.parseInt(txtPokedexID.getText().trim()));
             rsType1.next();
             cmbType1.setSelectedItem(rsType1.getString("type_name"));
             if(rsType1.next()){
@@ -328,7 +331,7 @@ public class UpdateDeletePokemon extends javax.swing.JFrame {
                 cmbType2.setSelectedItem("null");
             }
             
-            rsType1.close();
+          
 
             EnableDisableButtons();
         } catch (SQLException ex) {
@@ -476,11 +479,19 @@ public class UpdateDeletePokemon extends javax.swing.JFrame {
 
             if (isValidData()) {
                 prepStatement = con.prepareStatement("UPDATE pokemon SET name = ?, generation = ?, region = ?, preevolution = ? WHERE pokedexid = ?");
-//                prepStatement.setInt(1, Integer.parseInt(txtEmpno.getText()));
                 prepStatement.setString(1, txtName.getText().toUpperCase());
+                
                 prepStatement.setString(2, cmbGen.getSelectedItem().toString());
-                prepStatement.setString(3, cmbRegion.getSelectedItem().toString());
-                prepStatement.setInt(4, Integer.parseInt(cmbPreEv.getSelectedItem().toString()));
+                if( cmbRegion.getSelectedIndex() != 0)
+                    prepStatement.setString(3, cmbRegion.getSelectedItem().toString());
+                else {
+                    prepStatement.setString(3, null);
+                }
+                if( cmbPreEv.getSelectedIndex() != 0)
+                    prepStatement.setInt(4, Integer.parseInt(cmbPreEv.getSelectedItem().toString()));
+                else
+                    prepStatement.setInt(4, 0);
+                
                 prepStatement.setInt(5, Integer.parseInt(txtPokedexID.getText().trim()));
                 // Using JOptionPane Confirm Dialog to confirm the action
                 int confirmAction = JOptionPane.showConfirmDialog(this,"Confirm update?");

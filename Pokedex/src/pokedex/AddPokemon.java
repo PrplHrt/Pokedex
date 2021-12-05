@@ -340,8 +340,17 @@ public class AddPokemon extends javax.swing.JFrame {
                 prepStatement.setInt(1, Integer.parseInt(txtPokedexID.getText()));
                 prepStatement.setString(2, txtName.getText().toUpperCase());
                 prepStatement.setString(3, cmbGen.getSelectedItem().toString());
-                prepStatement.setString(4, cmbReg.getSelectedItem().toString());
-                prepStatement.setInt(5, Integer.parseInt(cmbPreEv.getSelectedItem().toString()));
+            
+                if( cmbReg.getSelectedIndex() != 0)
+                    prepStatement.setString(4, cmbReg.getSelectedItem().toString());
+                else {
+                    prepStatement.setString(4, null);
+                }
+                if( cmbPreEv.getSelectedIndex() != 0)
+                    prepStatement.setInt(5, Integer.parseInt(cmbPreEv.getSelectedItem().toString()));
+                else
+                    prepStatement.setInt(5, 0);
+               
                 int result = prepStatement.executeUpdate();
                 if (result > 0) {
 
