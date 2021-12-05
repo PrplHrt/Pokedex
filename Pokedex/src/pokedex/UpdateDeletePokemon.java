@@ -482,7 +482,7 @@ public class UpdateDeletePokemon extends javax.swing.JFrame {
                 prepStatement.setString(1, txtName.getText().toUpperCase());
                 
                 prepStatement.setString(2, cmbGen.getSelectedItem().toString());
-                if( cmbRegion.getSelectedIndex() != 0)
+                if( cmbRegion.getSelectedIndex() != 0 && cmbRegion.getSelectedItem() != null)
                     prepStatement.setString(3, cmbRegion.getSelectedItem().toString());
                 else {
                     prepStatement.setString(3, null);
@@ -513,7 +513,7 @@ public class UpdateDeletePokemon extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(null, label1, "ERROR", JOptionPane.INFORMATION_MESSAGE);
                         }
 
-                        if(!cmbType1.getSelectedItem().toString().equals(cmbType2.getSelectedItem().toString()) || cmbType2.getSelectedIndex() != 0){
+                        if(!cmbType1.getSelectedItem().toString().equals(cmbType2.getSelectedItem().toString()) && cmbType2.getSelectedIndex() != 0){
                             prepStatement.setString(2, cmbType2.getSelectedItem().toString());
                             int result3 = prepStatement.executeUpdate();
                             if(result3 <= 0){

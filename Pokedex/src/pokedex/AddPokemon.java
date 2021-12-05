@@ -371,7 +371,7 @@ public class AddPokemon extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, label1, "ERROR", JOptionPane.INFORMATION_MESSAGE);
                     }
                     
-                    if(!cmbType1.getSelectedItem().toString().equals(cmbType2.getSelectedItem().toString()) || cmbType2.getSelectedIndex() != 0){
+                    if(!cmbType1.getSelectedItem().toString().equals(cmbType2.getSelectedItem().toString()) && cmbType2.getSelectedIndex() != 0){
                         prepStatement.setString(2, cmbType2.getSelectedItem().toString());
                         int result3 = prepStatement.executeUpdate();
                         if(result3 <= 0){
