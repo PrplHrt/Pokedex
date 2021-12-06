@@ -341,7 +341,7 @@ public class AddPokemon extends javax.swing.JFrame {
                 prepStatement.setString(3, cmbGen.getSelectedItem().toString());
             
                 if( cmbReg.getSelectedIndex() != 0)
-                    prepStatement.setString(4, cmbReg.getSelectedItem().toString());
+                    prepStatement.setString(4, cmbReg.getSelectedItem().toString().toUpperCase());
                 else {
                     prepStatement.setString(4, null);
                 }

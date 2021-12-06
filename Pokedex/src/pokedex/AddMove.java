@@ -179,7 +179,7 @@ public class AddMove extends javax.swing.JFrame {
                 
                 prepStatement.setString(1, txtMoveName.getText().toUpperCase());
                 prepStatement.setInt(2, Integer.parseInt(txtMovePP.getText()));
-                prepStatement.setInt(3, Integer.parseInt(cmbType.getSelectedItem().toString()));
+                prepStatement.setString(3, cmbType.getSelectedItem().toString().toUpperCase());
                 int result = prepStatement.executeUpdate();
                 if (result > 0) {
 
@@ -243,7 +243,7 @@ public class AddMove extends javax.swing.JFrame {
         if (txtMoveName.getText().trim().isEmpty() || (txtMoveName.getText().trim().length() > 30)) {
             if (txtMoveName.getText().trim().isEmpty()) {
                 lblMoveNameError.setText("Invalid. Cannot be empty.");
-            } else if ((txtMoveName.getText().trim().length() > 10)) {
+            } else if ((txtMoveName.getText().trim().length() > 30)) {
                 lblMoveNameError.setText("Invalid. Must be < 30 chars.");
             }
 
