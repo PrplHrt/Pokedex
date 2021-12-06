@@ -63,7 +63,7 @@ public class Menu extends JFrame {
         SearchMove = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Menu - JDBC GUI");
+        setTitle("Pokedex Menu");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pokedex/pokemon_background.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");

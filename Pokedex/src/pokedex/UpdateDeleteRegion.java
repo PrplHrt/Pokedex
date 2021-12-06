@@ -1,6 +1,5 @@
 package pokedex;
 
-import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,32 +9,40 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-
-public class UpdateDeleteMove extends javax.swing.JFrame {
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+/**
+ *
+ * @author Eyad
+ */
+public class UpdateDeleteRegion extends javax.swing.JFrame {
 
     Connection con;
     Statement statement;
     Statement statement2;
     PreparedStatement prepStatement;
+    PreparedStatement prepStatement1;
     ResultSet rs;
-    ResultSet rstypes;
-    
-  
+    ResultSet rsReg;
+    ResultSet rsType;
+    ResultSet rsType1;
+
     /**
-     * Creates new form UpdateDeleteMove
+     * Creates new form AddEmployee
      */
-    public UpdateDeleteMove(myDBCon connect) {
+    public UpdateDeleteRegion(myDBCon connect) {
         initComponents();
         con = connect.getCon();
         this.setLocationRelativeTo(null);
 
-        lblMovePPError.setVisible(false);
-        
-
-        
+        //populate mgr and deptno combo boxes 
         try {
             // make the result set scrolable forward/backward updatable
             statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            statement2 = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             getNewData();
         } catch (SQLException e) {
             javax.swing.JLabel label = new javax.swing.JLabel("SQL Error - Connection error.");
@@ -48,28 +55,14 @@ public class UpdateDeleteMove extends javax.swing.JFrame {
     private void getNewData() {
 
         try {
-            // populate type field
-            rstypes = statement.executeQuery("SELECT name FROM type");
-            cmbType.removeAllItems();
-            while (rstypes.next()) {
-                cmbType.addItem(rstypes.getString("name"));
-            }
-
-        
-            rs = statement.executeQuery("SELECT name, powerpoints, move_type FROM move ORDER BY name ASC ");
-            if(!rs.isBeforeFirst()){
-                javax.swing.JLabel label = new javax.swing.JLabel("Error - No moves to update/delete");
-                label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-                JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
-                this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-           
-            }
+            rs = statement.executeQuery("SELECT * FROM region ORDER BY name ASC");
+            
             // populate rest of fields
             rs.beforeFirst();
             rs.first();
             populateFields();
         } catch (SQLException e) {
-            javax.swing.JLabel label = new javax.swing.JLabel("SQL Error - Display selected move.");
+            javax.swing.JLabel label = new javax.swing.JLabel("SQL Error - Display selected empno.");
             label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
             JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
@@ -85,23 +78,36 @@ public class UpdateDeleteMove extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnNext = new javax.swing.JButton();
         btnPrevious = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        txtMoveName = new javax.swing.JTextField();
-        lblMovePPError = new javax.swing.JLabel();
-        txtMovePP = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        cmbType = new javax.swing.JComboBox<>();
+        txtCapital = new javax.swing.JTextField();
+        txtProf = new javax.swing.JTextField();
+        lblCapitalError = new javax.swing.JLabel();
+        lblProfError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Update/Delete Move");
+        setTitle("Update/Delete Region");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel1.setText("Update/Delete Move");
+        jLabel1.setText("Update/Delete Region");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setText("Name:");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setText("Capital:");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel5.setText("Professor:");
+
+        txtName.setEditable(false);
+        txtName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnUpdate.setText("Update");
@@ -135,85 +141,86 @@ public class UpdateDeleteMove extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setText("PowerPoints:");
+        txtCapital.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setText("Move Type:");
+        txtProf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtProfActionPerformed(evt);
+            }
+        });
 
-        txtMoveName.setEditable(false);
-        txtMoveName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblCapitalError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblCapitalError.setForeground(new java.awt.Color(255, 0, 0));
+        lblCapitalError.setText("error label");
 
-        lblMovePPError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
-        lblMovePPError.setForeground(new java.awt.Color(255, 0, 0));
-        lblMovePPError.setText("error label");
-
-        txtMovePP.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setText("Move Name:");
-
-        cmbType.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblProfError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblProfError.setForeground(new java.awt.Color(255, 0, 0));
+        lblProfError.setText("error label");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(btnPrevious)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnUpdate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDelete)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnNext)
+                .addContainerGap(52, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtMoveName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtMovePP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblMovePPError, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cmbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtProf, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtCapital, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblCapitalError, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblProfError, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
-                        .addComponent(btnPrevious)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnUpdate)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDelete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnNext)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                        .addComponent(jLabel1)))
+                .addGap(61, 61, 61))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtMoveName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtMovePP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMovePPError))
-                .addGap(24, 24, 24)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(cmbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
+                    .addComponent(txtCapital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCapitalError))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtProf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblProfError, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUpdate)
                     .addComponent(btnDelete)
                     .addComponent(btnNext)
                     .addComponent(btnPrevious))
-                .addGap(0, 43, Short.MAX_VALUE))
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
         pack();
@@ -221,13 +228,15 @@ public class UpdateDeleteMove extends javax.swing.JFrame {
 
     private void populateFields() {
         try {
-            txtMoveName.setText(rs.getString("name"));
-            txtMovePP.setText(rs.getString("powerpoints"));
-            cmbType.setSelectedItem(rs.getString("move_type"));
+            txtName.setText(rs.getString("name"));
+            txtCapital.setText(rs.getString("capital"));
+            txtProf.setText(rs.getString("professor"));
+            
           
+
             EnableDisableButtons();
         } catch (SQLException ex) {
-            Logger.getLogger(UpdateDeleteMove.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateDeleteRegion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -242,7 +251,7 @@ public class UpdateDeleteMove extends javax.swing.JFrame {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UpdateDeleteMove.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateDeleteRegion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
@@ -259,7 +268,7 @@ public class UpdateDeleteMove extends javax.swing.JFrame {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UpdateDeleteMove.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateDeleteRegion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -276,7 +285,7 @@ public class UpdateDeleteMove extends javax.swing.JFrame {
                 btnNext.setEnabled(true);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UpdateDeleteMove.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UpdateDeleteRegion.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -288,83 +297,71 @@ public class UpdateDeleteMove extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-       
+
         try {
-            
-            rs = statement.executeQuery("Select * from moves_learnt where move_name = '" + txtMoveName.getText().trim().toUpperCase() +"'");
-            if (rs.isBeforeFirst()) {
-                JOptionPane.showMessageDialog(null, "Error: There are Pokemon that learnt this move.");
-                return;
-            }
-            
-            
             // make the result set scrolable forward/backward updatable
-            prepStatement = con.prepareStatement("DELETE move WHERE name = " + txtMoveName.getText().trim());
+            prepStatement = con.prepareStatement("DELETE region WHERE name = " + txtName.getText().trim());
+            prepStatement1 = con.prepareStatement("UPDATE pokemon SET region = null WHERE region = '" + txtName.getText().trim().toUpperCase() +"'");
             // Using JOptionPane Confirm Dialog to confirm the action
-            int confirmAction = JOptionPane.showConfirmDialog(this,String.format("Confirm delete of move: %s?", txtMoveName.getText().trim()));
+            int confirmAction = JOptionPane.showConfirmDialog(this,String.format("Confirm delete of region: %s?", txtName.getText().trim()));
             if (confirmAction == JOptionPane.YES_OPTION){
-                int result = prepStatement.executeUpdate();
-                if (result > 0) {
-                    javax.swing.JLabel label = new javax.swing.JLabel(txtMoveName.getText().trim() + " deleted successfully.");
-                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-                    JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-                    getNewData();
+                int result1 = prepStatement1.executeUpdate();
+                if (result1 > 0){
+                    int result = prepStatement.executeUpdate();
+                    if (result > 0) {
+                        javax.swing.JLabel label = new javax.swing.JLabel("Region " + txtName.getText().trim() + " deleted successfully.");
+                        label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+                        JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                        getNewData();
+                    }
                 }
             }
             prepStatement.close();
+            prepStatement1.close();
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error deleting move.");
+            JOptionPane.showMessageDialog(null, "Error removing pokemon.");
 
         }
 
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     void clearErrorLabels() {
-        lblMovePPError.setText("");
-        
-    }
-
-    public boolean isInteger(String s) {
-        try {
-            Integer.parseInt(s);
-            return true;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-    }
-
-    public boolean isDouble(String s) {
-        try {
-            Double.parseDouble(s);
-            return true;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
+        lblProfError.setText("");
+        lblProfError.setVisible(false);
+        lblCapitalError.setText("");
+        lblCapitalError.setVisible(false);
     }
 
     boolean isValidData() {
 
         clearErrorLabels();
         boolean result = true;
-         
-
-        if (txtMovePP.getText().trim().isEmpty() || !(isInteger(txtMovePP.getText().trim()) || isDouble(txtMovePP.getText().trim()))) {
-            if (txtMovePP.getText().trim().isEmpty()) {
-                lblMovePPError.setText("Invalid. Cannot be empty.");
-            } else if (!(isInteger(txtMovePP.getText().trim()) || isDouble(txtMovePP.getText().trim()))) {
-                lblMovePPError.setText("Invalid. Must be number.");
+        
+        if (txtCapital.getText().trim().isEmpty() || (txtCapital.getText().trim().length() > 30)) {
+            if (txtCapital.getText().trim().isEmpty()) {
+                lblCapitalError.setText("Invalid. Cannot be empty.");
+            } else if ((txtCapital.getText().trim().length() > 30)) {
+                lblCapitalError.setText("Invalid. Must be <= 30 chars.");
             }
 
-            lblMovePPError.setVisible(true);
+            lblCapitalError.setVisible(true);
             result = false;
         }
 
-
+        if (txtProf.getText().trim().isEmpty() || (txtProf.getText().trim().length() > 30)) {
+            if (txtProf.getText().trim().isEmpty()) {
+                lblProfError.setText("Invalid. Cannot be empty.");
+            } else if (txtProf.getText().trim().length() > 30) {
+                lblProfError.setText("Invalid. Must be <= 30 chars.");
+            }
+            lblProfError.setVisible(true);
+            result = false;
+        }
 
         return result;
     }
-   
+    // Eyad - Need to change this to add a CONFIRM message dialogue; similar to btnDeleteActionPerformed() could just add a confrim function
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
 
@@ -373,18 +370,19 @@ public class UpdateDeleteMove extends javax.swing.JFrame {
 //            statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             if (isValidData()) {
-                prepStatement = con.prepareStatement("UPDATE move SET powerpoints = ?, move_type = ? WHERE name = ?");
-                prepStatement.setInt(1, Integer.parseInt(txtMovePP.getText()));
-                prepStatement.setString(2, cmbType.getSelectedItem().toString());
-                prepStatement.setString(3, txtMoveName.getText().toUpperCase());
+                prepStatement = con.prepareStatement("UPDATE region SET capital = ?, professor = ? WHERE name = ?");
+                prepStatement.setString(3, txtName.getText().trim().toUpperCase());
+                
+                prepStatement.setString(1, txtCapital.getText().trim().toUpperCase());
+                prepStatement.setString(2, txtProf.getText().trim().toUpperCase());
                 
                 // Using JOptionPane Confirm Dialog to confirm the action
                 int confirmAction = JOptionPane.showConfirmDialog(this,"Confirm update?");
                 if (confirmAction == JOptionPane.YES_OPTION){
                     int result = prepStatement.executeUpdate();
                     if (result > 0) {
-
-                        javax.swing.JLabel label = new javax.swing.JLabel(txtMoveName.getText() + " updated successfully.");
+                        
+                        javax.swing.JLabel label = new javax.swing.JLabel("Region " + txtName.getText().trim() + " updated successfully.");
                         label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
                         JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
 
@@ -406,10 +404,14 @@ public class UpdateDeleteMove extends javax.swing.JFrame {
 
         } catch (SQLException e) {
 
-            JOptionPane.showMessageDialog(null, "Error updating move." + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error updating region." + e.getMessage());
 
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void txtProfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtProfActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -417,13 +419,14 @@ public class UpdateDeleteMove extends javax.swing.JFrame {
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrevious;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox<String> cmbType;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel lblMovePPError;
-    private javax.swing.JTextField txtMoveName;
-    private javax.swing.JTextField txtMovePP;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblCapitalError;
+    private javax.swing.JLabel lblProfError;
+    private javax.swing.JTextField txtCapital;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtProf;
     // End of variables declaration//GEN-END:variables
 }
