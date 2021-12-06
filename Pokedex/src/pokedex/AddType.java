@@ -46,14 +46,14 @@ public class AddType extends javax.swing.JFrame {
         //populate powerful_against combo box
             rs = statement.executeQuery("SELECT name FROM type");
             //exists incase the type desiered was not in the table, then the type can be added and this value can me modified in update/delete menu
-            cmbPwrAgnst.addItem("null");
+            cmbPwrAgnst.addItem("None");
             while (rs.next()) {
                 cmbPwrAgnst.addItem(rs.getString("name"));
             }
             
         }
         catch (SQLException e) {
-            javax.swing.JLabel label = new javax.swing.JLabel("SQL Error - Display selected empno.");
+            javax.swing.JLabel label = new javax.swing.JLabel("SQL Error - Display selected type.");
             label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
             JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
         }
@@ -272,8 +272,10 @@ public class AddType extends javax.swing.JFrame {
                 prepStatement = con.prepareStatement("INSERT INTO Type (name, generation, powerful_against) VALUES (? , ? , ?)");
                 prepStatement.setString(1, txtTypeName.getText().toUpperCase());
                 prepStatement.setString(2, cmbGen.getSelectedItem().toString());
-                if()
+                if(cmbPwrAgnst.getSelectedIndex() != 0) 
                     prepStatement.setString(3 , cmbPwrAgnst.getSelectedItem().toString().toUpperCase());
+                else
+                    prepStatement.setString(3 , null);
                 
                 int result = prepStatement.executeUpdate();
                 if (result > 0) {

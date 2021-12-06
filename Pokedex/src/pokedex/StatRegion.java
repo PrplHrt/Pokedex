@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author Eyad 
  */
-public class StatType extends javax.swing.JFrame {
+public class StatRegion extends javax.swing.JFrame {
 
     /**
      * Creates new form AddPokemon
@@ -26,7 +26,7 @@ public class StatType extends javax.swing.JFrame {
     ResultSet rs;
     
 
-    public StatType(myDBCon connect) {
+    public StatRegion(myDBCon connect) {
         initComponents();
         con = connect.getCon();
         // center form in screen 
@@ -38,9 +38,10 @@ public class StatType extends javax.swing.JFrame {
             statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             
             // get and populate valid regions 
-            rs = statement.executeQuery("SELECT name FROM type ORDER BY name ASC");
+            rs = statement.executeQuery("SELECT name FROM region ORDER BY name ASC");
+            cmbReg.addItem("None");
             while (rs.next()) {
-                cmbType.addItem(rs.getString("name"));
+                cmbReg.addItem(rs.getString("name"));
             }
 
             rs.close();
@@ -62,14 +63,14 @@ public class StatType extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         btnSearch = new javax.swing.JButton();
-        cmbType = new javax.swing.JComboBox<>();
+        cmbReg = new javax.swing.JComboBox<>();
         txtResult = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add New Pokemon");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("Number of Pokemon of Type");
+        jLabel1.setText("Number of Pokemon in");
 
         btnSearch.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnSearch.setText("Find");
@@ -79,7 +80,7 @@ public class StatType extends javax.swing.JFrame {
             }
         });
 
-        cmbType.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cmbReg.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         txtResult.setEditable(false);
         txtResult.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -91,17 +92,17 @@ public class StatType extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(254, 254, 254)
-                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtResult, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtResult, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(cmbType, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(17, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cmbReg, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(254, 254, 254)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,7 +110,7 @@ public class StatType extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(cmbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(txtResult, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -127,9 +128,14 @@ public class StatType extends javax.swing.JFrame {
         try {
             // make the result set scrolable forward/backward updatable
             statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            
-            rs = statement.executeQuery("SELECT count(*) num FROM pokemon_types WHERE type_name = '" + cmbType.getSelectedItem().toString() +"'");
-            
+            if(cmbReg.getSelectedIndex() != 0){
+                System.out.println("Not none");
+                rs = statement.executeQuery("SELECT count(*) num FROM pokemon WHERE region = '" + cmbReg.getSelectedItem().toString() +"'");
+            }
+            else {
+                System.out.println("None");
+                rs = statement.executeQuery("SELECT count(*) num FROM pokemon WHERE region is null");
+            }
             rs.next();
             txtResult.setText(rs.getString(1));
             
@@ -143,7 +149,7 @@ public class StatType extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch;
-    private javax.swing.JComboBox<String> cmbType;
+    private javax.swing.JComboBox<String> cmbReg;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField txtResult;
     // End of variables declaration//GEN-END:variables

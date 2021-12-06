@@ -44,21 +44,21 @@ public class AddPokemon extends javax.swing.JFrame {
             rs = statement.executeQuery("SELECT name FROM type ORDER BY name ASC");
             // populate Type combo boxes
             // Adding null to allow just 1 Type to be selected
-            cmbType2.addItem("null");
+            cmbType2.addItem("None");
             while (rs.next()) {
                 cmbType1.addItem(rs.getString("name"));
                 cmbType2.addItem(rs.getString("name"));
             }
             
             // get and populate valid regions 
-            cmbReg.addItem("null");
+            cmbReg.addItem("None");
             rs = statement.executeQuery("SELECT name FROM region ORDER BY name ASC");
             while (rs.next()) {
                 cmbReg.addItem(rs.getString("name"));
             }
             
             // get and populate valid preevolutions 
-            cmbPreEv.addItem("null");
+            cmbPreEv.addItem("None");
             rs = statement.executeQuery("SELECT pokedexID FROM pokemon ORDER BY pokedexID ASC");
             while (rs.next()) {
                 cmbPreEv.addItem(rs.getString("pokedexID"));
@@ -391,7 +391,7 @@ public class AddPokemon extends javax.swing.JFrame {
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error adding new employee.");
+            JOptionPane.showMessageDialog(null, "Error adding new pokemon.");
         }
     }//GEN-LAST:event_btnAddNewPokemonActionPerformed
 
