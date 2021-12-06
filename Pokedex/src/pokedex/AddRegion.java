@@ -1,13 +1,10 @@
 package pokedex;
 
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 
@@ -27,36 +24,11 @@ public class AddRegion extends javax.swing.JFrame {
         // center form in screen 
         this.setLocationRelativeTo(null);
         // set all error labels to invisible
-        lblEmpnoError.setVisible(false);
-        lblEnameError.setVisible(false);
-        lblJobError.setVisible(false);
-        lblHiredateError.setVisible(false);
-        lblSalaryError.setVisible(false);
-        lblCommError.setVisible(false);
-
-        //populate mgr and deptno combo boxes 
-        try {
-            // make the result set scrolable forward/backward updatable
-            statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            // populate valid mgr numbers 
-            rs = statement.executeQuery("SELECT empno FROM emp ORDER BY empno ASC");
-            // populate mgr combo box
-            while (rs.next()) {
-                cmbMgr.addItem(rs.getString("empno"));
-            }
-
-            // get and populate valid department numbers 
-            rs = statement.executeQuery("SELECT DISTINCT deptno, dname FROM dept ORDER BY deptno ASC");
-            while (rs.next()) {
-                cmbDeptno.addItem(rs.getString("deptno"));
-            }
-
-            rs.close();
-            statement.close();
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-
+        lblNameError.setVisible(false);
+        lblCapitalError.setVisible(false);
+        lblProfError.setVisible(false);
+        
+        
     }
 
     /**
@@ -72,16 +44,16 @@ public class AddRegion extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtEmpno = new javax.swing.JTextField();
-        txtEname = new javax.swing.JTextField();
-        txtJob = new javax.swing.JTextField();
-        btnAddNewEmp = new javax.swing.JButton();
-        lblEmpnoError = new javax.swing.JLabel();
-        lblJobError = new javax.swing.JLabel();
-        lblEnameError = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        txtCapital = new javax.swing.JTextField();
+        txtProf = new javax.swing.JTextField();
+        btnAddNewRegion = new javax.swing.JButton();
+        lblNameError = new javax.swing.JLabel();
+        lblProfError = new javax.swing.JLabel();
+        lblCapitalError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Add New Employee");
+        setTitle("Add New Region");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("Add New Region");
@@ -95,36 +67,36 @@ public class AddRegion extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setText("Professor:");
 
-        txtEmpno.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        txtEname.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtCapital.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        txtJob.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtJob.addActionListener(new java.awt.event.ActionListener() {
+        txtProf.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtProf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtJobActionPerformed(evt);
+                txtProfActionPerformed(evt);
             }
         });
 
-        btnAddNewEmp.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnAddNewEmp.setText("Add New");
-        btnAddNewEmp.addActionListener(new java.awt.event.ActionListener() {
+        btnAddNewRegion.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        btnAddNewRegion.setText("Add New");
+        btnAddNewRegion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddNewEmpActionPerformed(evt);
+                btnAddNewRegionActionPerformed(evt);
             }
         });
 
-        lblEmpnoError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
-        lblEmpnoError.setForeground(new java.awt.Color(255, 0, 0));
-        lblEmpnoError.setText("error label");
+        lblNameError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblNameError.setForeground(new java.awt.Color(255, 0, 0));
+        lblNameError.setText("error label");
 
-        lblJobError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
-        lblJobError.setForeground(new java.awt.Color(255, 0, 0));
-        lblJobError.setText("error label");
+        lblProfError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblProfError.setForeground(new java.awt.Color(255, 0, 0));
+        lblProfError.setText("error label");
 
-        lblEnameError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
-        lblEnameError.setForeground(new java.awt.Color(255, 0, 0));
-        lblEnameError.setText("error label");
+        lblCapitalError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblCapitalError.setForeground(new java.awt.Color(255, 0, 0));
+        lblCapitalError.setText("error label");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,18 +110,18 @@ public class AddRegion extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtEmpno, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                    .addComponent(txtEname, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                    .addComponent(txtJob)
+                    .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(txtCapital, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(txtProf)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(13, 13, 13)
-                        .addComponent(btnAddNewEmp)))
+                        .addComponent(btnAddNewRegion)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblEnameError, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                        .addComponent(lblJobError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(lblEmpnoError, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
+                        .addComponent(lblCapitalError, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                        .addComponent(lblProfError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblNameError, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
                 .addContainerGap(68, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(142, 142, 142)
@@ -164,20 +136,20 @@ public class AddRegion extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtEmpno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEmpnoError))
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNameError))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtEname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEnameError))
+                    .addComponent(txtCapital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCapitalError))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtJob, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblJobError))
+                    .addComponent(txtProf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblProfError))
                 .addGap(33, 33, 33)
-                .addComponent(btnAddNewEmp)
+                .addComponent(btnAddNewRegion)
                 .addGap(0, 49, Short.MAX_VALUE))
         );
 
@@ -193,92 +165,63 @@ public class AddRegion extends javax.swing.JFrame {
         }
     }
 
-    public boolean isDouble(String s) {
-        try {
-            Double.parseDouble(s);
-            return true;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-    }
 
     void clearErrorLabels() {
-        lblEmpnoError.setText("");
-        lblEmpnoError.setVisible(false);
-        lblEnameError.setText("");
-        lblEnameError.setVisible(false);
-        lblJobError.setText("");
-        lblJobError.setVisible(false);
-        lblHiredateError.setText("");
-        lblHiredateError.setVisible(false);
-        lblSalaryError.setText("");
-        lblSalaryError.setVisible(false);
-        lblCommError.setText("");
-        lblCommError.setVisible(false);
-
+        lblNameError.setText("");
+        lblNameError.setVisible(false);
+        lblCapitalError.setText("");
+        lblCapitalError.setVisible(false);
+        lblProfError.setText("");
+        lblProfError.setVisible(false);
     }
 
     boolean isValidData() {
 
         clearErrorLabels();
         boolean result = true;
-        if (txtEmpno.getText().trim().isEmpty() || !isInteger(txtEmpno.getText().trim())) {
-            if (txtEmpno.getText().trim().isEmpty()) {
-                lblEmpnoError.setText("Invalid. Cannot be empty.");
-            } else if (!isInteger(txtEmpno.getText().trim())) {
-                lblEmpnoError.setText("Invalid. Must be integer.");
+        if (txtName.getText().trim().isEmpty() || (txtName.getText().trim().length() > 30)) {
+            if (txtName.getText().trim().isEmpty()) {
+                lblNameError.setText("Invalid. Cannot be empty.");
+            } else if ((txtName.getText().trim().length() > 30)) {
+                lblNameError.setText("Invalid. Must be <= 30 chars.");
             }
 
-            lblEmpnoError.setVisible(true);
+            lblNameError.setVisible(true);
+            result = false;
+        } else {
+            try {
+                // make the result set scrolable forward/backward updatable
+                statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                rs = statement.executeQuery("SELECT * FROM region WHERE = '" + txtName.getText().trim() + "'");
+                if(rs.isBeforeFirst()){
+                    lblNameError.setText("Invalid. Name must be unique.");
+                    lblNameError.setVisible(true);
+                    result = false;
+                }
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+
+        }
+
+        if (txtCapital.getText().trim().isEmpty() || (txtCapital.getText().trim().length() > 30)) {
+            if (txtCapital.getText().trim().isEmpty()) {
+                lblCapitalError.setText("Invalid. Cannot be empty.");
+            } else if ((txtCapital.getText().trim().length() > 30)) {
+                lblCapitalError.setText("Invalid. Must be <= 30 chars.");
+            }
+
+            lblCapitalError.setVisible(true);
             result = false;
         }
 
-        if (txtEname.getText().trim().isEmpty() || (txtEname.getText().trim().length() > 10)) {
-            if (txtEname.getText().trim().isEmpty()) {
-                lblEnameError.setText("Invalid. Cannot be empty.");
-            } else if ((txtEname.getText().trim().length() > 10)) {
-                lblEnameError.setText("Invalid. Must be < 10 chars.");
+        if (txtProf.getText().trim().isEmpty() || (txtProf.getText().trim().length() > 30)) {
+            if (txtProf.getText().trim().isEmpty()) {
+                lblProfError.setText("Invalid. Cannot be empty.");
+            } else if (txtProf.getText().trim().length() > 30) {
+                lblProfError.setText("Invalid. Must be <= 30 chars.");
             }
-
-            lblEnameError.setVisible(true);
-            result = false;
-        }
-
-        if (txtJob.getText().trim().isEmpty() || (txtJob.getText().trim().length() > 9)) {
-            if (txtJob.getText().trim().isEmpty()) {
-                lblJobError.setText("Invalid. Cannot be empty.");
-            } else if (txtJob.getText().trim().length() > 9) {
-                lblJobError.setText("Invalid. Must be < 9 chars.");
-            }
-            lblJobError.setVisible(true);
-            result = false;
-        }
-
-        if (ftxtHiredate.getText().trim().isEmpty()) {
-            lblHiredateError.setText("Invalid. Cannot be empty.");
-            lblHiredateError.setVisible(true);
-            result = false;
-        }
-
-        if (txtSalary.getText().trim().isEmpty() || !(isInteger(txtSalary.getText().trim()) || isDouble(txtSalary.getText().trim()))) {
-            if (txtSalary.getText().trim().isEmpty()) {
-                lblSalaryError.setText("Invalid. Cannot be empty.");
-            } else if (!(isInteger(txtSalary.getText().trim()) || isDouble(txtSalary.getText().trim()))) {
-                lblSalaryError.setText("Invalid. Must be number.");
-            }
-
-            lblSalaryError.setVisible(true);
-            result = false;
-        }
-
-        if (txtComm.getText().trim().isEmpty() || !isInteger(txtComm.getText().trim())) {
-            if (txtComm.getText().trim().isEmpty()) {
-                lblCommError.setText("Invalid. Cannot be empty.");
-            } else if (!isInteger(txtComm.getText().trim())) {
-                lblCommError.setText("Invalid. Must be integer");
-            }
-
-            lblCommError.setVisible(true);
+            lblProfError.setVisible(true);
             result = false;
         }
 
@@ -286,17 +229,12 @@ public class AddRegion extends javax.swing.JFrame {
     }
 
     void clearInputBoxes() {
-        txtEmpno.setText("");
-        txtEname.setText("");
-        txtJob.setText("");
-        ftxtHiredate.setText("");
-        txtSalary.setText("");
-        txtComm.setText("");
-        cmbDeptno.setSelectedIndex(0);
-        cmbMgr.setSelectedIndex(0);
+        txtName.setText("");
+        txtCapital.setText("");
+        txtProf.setText("");
     }
 
-    private void btnAddNewEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewEmpActionPerformed
+    private void btnAddNewRegionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewRegionActionPerformed
         // TODO add your handling code here:
 
         try {
@@ -304,19 +242,14 @@ public class AddRegion extends javax.swing.JFrame {
             statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             if (isValidData()) {
-                prepStatement = con.prepareStatement("INSERT INTO emp (empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES (? , ? , ?, ? , ? , ?, ?, ?)");
-                prepStatement.setInt(1, Integer.parseInt(txtEmpno.getText()));
-                prepStatement.setString(2, txtEname.getText().toUpperCase());
-                prepStatement.setString(3, txtJob.getText().toUpperCase());
-                prepStatement.setInt(4, Integer.parseInt(cmbMgr.getSelectedItem().toString()));
-                prepStatement.setString(5, ftxtHiredate.getText());
-                prepStatement.setInt(6, Integer.parseInt(txtSalary.getText()));
-                prepStatement.setInt(7, Integer.parseInt(txtComm.getText()));
-                prepStatement.setInt(8, Integer.parseInt(cmbDeptno.getSelectedItem().toString()));
+                prepStatement = con.prepareStatement("INSERT INTO region (name, capital, professor) VALUES (? , ? , ?)");
+                prepStatement.setString(1, txtName.getText().trim().toUpperCase());
+                prepStatement.setString(2, txtCapital.getText().trim().toUpperCase());
+                prepStatement.setString(3, txtProf.getText().trim().toUpperCase());
                 int result = prepStatement.executeUpdate();
                 if (result > 0) {
 
-                    javax.swing.JLabel label = new javax.swing.JLabel("New employee added successfully.");
+                    javax.swing.JLabel label = new javax.swing.JLabel("New region added successfully.");
                     label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
                     JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
 
@@ -337,26 +270,26 @@ public class AddRegion extends javax.swing.JFrame {
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error adding new employee.");
+            JOptionPane.showMessageDialog(null, "Error adding new region.");
         }
-    }//GEN-LAST:event_btnAddNewEmpActionPerformed
+    }//GEN-LAST:event_btnAddNewRegionActionPerformed
 
-    private void txtJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtJobActionPerformed
+    private void txtProfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtProfActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtJobActionPerformed
+    }//GEN-LAST:event_txtProfActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddNewEmp;
+    private javax.swing.JButton btnAddNewRegion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel lblEmpnoError;
-    private javax.swing.JLabel lblEnameError;
-    private javax.swing.JLabel lblJobError;
-    private javax.swing.JTextField txtEmpno;
-    private javax.swing.JTextField txtEname;
-    private javax.swing.JTextField txtJob;
+    private javax.swing.JLabel lblCapitalError;
+    private javax.swing.JLabel lblNameError;
+    private javax.swing.JLabel lblProfError;
+    private javax.swing.JTextField txtCapital;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtProf;
     // End of variables declaration//GEN-END:variables
 }

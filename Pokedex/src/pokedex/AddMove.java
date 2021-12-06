@@ -27,7 +27,7 @@ public class AddMove extends javax.swing.JFrame {
         // center form in screen 
         this.setLocationRelativeTo(null);
         
-        // set all error labels to invisible 
+        // set all error labels to invisible
         lblMoveNameError.setVisible(false);
         lblMovePPError.setVisible(false);
         
