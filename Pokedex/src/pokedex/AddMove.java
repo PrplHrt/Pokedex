@@ -70,7 +70,7 @@ public class AddMove extends javax.swing.JFrame {
         lblMovePPError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Add New Employee");
+        setTitle("Add New Move");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("Add New Move");
@@ -293,8 +293,6 @@ public class AddMove extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddNewMove_;
-    private javax.swing.JButton btnAddNewType;
     private javax.swing.JButton btnAddType;
     private javax.swing.JComboBox<String> cmbType;
     private javax.swing.JLabel jLabel1;
