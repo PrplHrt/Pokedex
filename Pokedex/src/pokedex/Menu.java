@@ -40,30 +40,30 @@ public class Menu extends JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        LearnMove = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
+        ForgetMove = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
-        jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
-        jMenuItem18 = new javax.swing.JMenuItem();
+        SearchName = new javax.swing.JMenuItem();
+        SearchMove = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Menu - JDBC GUI");
+        setTitle("Pokedex Menu");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pokedex/pokemon_background.jpg"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -97,47 +97,6 @@ public class Menu extends JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Add");
-        jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-
-        jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jMenuItem3.setText("New Pokemon");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem3);
-
-        jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jMenuItem5.setText("New Type");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem5);
-
-        jMenuItem11.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jMenuItem11.setText("New Move");
-        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem11ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem11);
-
-        jMenuItem12.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jMenuItem12.setText("New Region");
-        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem12ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem12);
-
-        jMenuBar1.add(jMenu2);
-
         jMenu3.setText("Users");
         jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
 
@@ -163,28 +122,55 @@ public class Menu extends JFrame {
 
         jMenuBar1.add(jMenu3);
 
-        jMenu5.setText("Other");
-        jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        LearnMove.setText("Add");
+        LearnMove.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
 
-        jMenuItem9.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jMenuItem9.setText("Pokemon Types");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jMenuItem3.setText("New Pokemon");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
+                jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem9);
+        LearnMove.add(jMenuItem3);
 
-        jMenuItem10.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jMenuItem10.setText("Pokemon Moves");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jMenuItem5.setText("New Type");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
+                jMenuItem5ActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem10);
+        LearnMove.add(jMenuItem5);
 
-        jMenuBar1.add(jMenu5);
+        jMenuItem11.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jMenuItem11.setText("New Move");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        LearnMove.add(jMenuItem11);
+
+        jMenuItem12.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jMenuItem12.setText("New Region");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        LearnMove.add(jMenuItem12);
+
+        jMenuItem15.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jMenuItem15.setText("Learn Move");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        LearnMove.add(jMenuItem15);
+
+        jMenuBar1.add(LearnMove);
 
         jMenu4.setText("Update/Delete");
         jMenu4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -225,46 +211,55 @@ public class Menu extends JFrame {
         });
         jMenu4.add(jMenuItem14);
 
+        ForgetMove.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        ForgetMove.setText("Forget Move");
+        jMenu4.add(ForgetMove);
+
         jMenuBar1.add(jMenu4);
 
-        jMenu6.setText("Search");
+        jMenu5.setText("Statistics");
+        jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+
+        jMenuItem9.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jMenuItem9.setText("Pokemon In Region");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem9);
+
+        jMenuItem10.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jMenuItem10.setText("Pokemon by Type");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem10);
+
+        jMenuBar1.add(jMenu5);
+
+        jMenu6.setText("Search Pokemon");
         jMenu6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
 
-        jMenuItem15.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jMenuItem15.setText("Pokemon");
-        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+        SearchName.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        SearchName.setText("By Name");
+        SearchName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem15ActionPerformed(evt);
+                SearchNameActionPerformed(evt);
             }
         });
-        jMenu6.add(jMenuItem15);
+        jMenu6.add(SearchName);
 
-        jMenuItem16.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jMenuItem16.setText("Type");
-        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+        SearchMove.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        SearchMove.setText("By Move");
+        SearchMove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem16ActionPerformed(evt);
+                SearchMoveActionPerformed(evt);
             }
         });
-        jMenu6.add(jMenuItem16);
-
-        jMenuItem17.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jMenuItem17.setText("Move");
-        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem17ActionPerformed(evt);
-            }
-        });
-        jMenu6.add(jMenuItem17);
-
-        jMenuItem18.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jMenuItem18.setText("Region");
-        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem18ActionPerformed(evt);
-            }
-        });
-        jMenu6.add(jMenuItem18);
+        jMenu6.add(SearchMove);
 
         jMenuBar1.add(jMenu6);
 
@@ -338,7 +333,7 @@ public class Menu extends JFrame {
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         // TODO add your handling code here:
-        //(new AddRegion(con)).setVisible(true);
+        (new AddRegion(con)).setVisible(true);
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
@@ -348,34 +343,33 @@ public class Menu extends JFrame {
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
         // TODO add your handling code here:
-        // (new UpdateDeleteRegion(con)).setVisible(true);
+        (new UpdateDeleteRegion(con)).setVisible(true);
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
+    private void SearchNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SearchNameActionPerformed
+
+    private void SearchMoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchMoveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SearchMoveActionPerformed
+
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
-    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem16ActionPerformed
-
-    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem17ActionPerformed
-
-    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem18ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ForgetMove;
+    private javax.swing.JMenu LearnMove;
+    private javax.swing.JMenuItem SearchMove;
+    private javax.swing.JMenuItem SearchName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
@@ -388,9 +382,6 @@ public class Menu extends JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

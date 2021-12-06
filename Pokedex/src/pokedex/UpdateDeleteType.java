@@ -22,7 +22,7 @@ public class UpdateDeleteType extends javax.swing.JFrame {
     
 
     /**
-     * Creates new form AddEmployee
+     * Creates new form Addtype
      */
     public UpdateDeleteType(myDBCon connect) {
         initComponents();
@@ -102,7 +102,7 @@ public class UpdateDeleteType extends javax.swing.JFrame {
         txtTypeName = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Update/Delete Employee");
+        setTitle("Update/Delete Type");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 222, 0));
@@ -412,7 +412,7 @@ public class UpdateDeleteType extends javax.swing.JFrame {
 
         } catch (SQLException e) {
 
-            JOptionPane.showMessageDialog(null, "Error updating employee." + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error updating type." + e.getMessage());
 
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
