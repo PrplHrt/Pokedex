@@ -226,7 +226,7 @@ public class AddType extends javax.swing.JFrame {
        try {
            
             statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            rs = statement.executeQuery("SELECT * FROM type WHERE name = '" + txtTypeName.getText().trim() + "'");
+            rs = statement.executeQuery("SELECT * FROM type WHERE name = '" + txtTypeName.getText().trim().toUpperCase() + "'");
             if (rs.isBeforeFirst()) {
                 lblTypeNameError.setText("Invalid. Type already exists in table.");
                 lblTypeNameError.setVisible(true);
@@ -271,7 +271,7 @@ public class AddType extends javax.swing.JFrame {
                 prepStatement = con.prepareStatement("INSERT INTO Type (name, generation, powerful_against) VALUES (? , ? , ?)");
                 prepStatement.setString(1, txtTypeName.getText().toUpperCase());
                 prepStatement.setString(2, cmbGen.getSelectedItem().toString());
-                prepStatement.setString(3 , cmbPwrAgnst.getSelectedItem().toString());
+                prepStatement.setString(3 , cmbPwrAgnst.getSelectedItem().toString().toUpperCase());
                 
                 int result = prepStatement.executeUpdate();
                 if (result > 0) {
