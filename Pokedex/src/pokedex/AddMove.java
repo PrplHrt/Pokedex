@@ -40,9 +40,6 @@ public class AddMove extends javax.swing.JFrame {
             while (rs.next()) {
                 cmbType.addItem(rs.getString("name"));
             }
-            
-            //incase the type desired has not been added yet, then user can add the type in addtype menu then update this entry
-            cmbType.addItem(null);
 
             rs.close();
             statement.close();
