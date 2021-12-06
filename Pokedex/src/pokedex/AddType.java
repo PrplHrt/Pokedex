@@ -28,6 +28,7 @@ public class AddType extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         // set all error labels to invisible
         lblTypeNameError.setVisible(false);
+        lblPwrAgnstError.setVisible(false);
 
         //populate generation combo box 
         
