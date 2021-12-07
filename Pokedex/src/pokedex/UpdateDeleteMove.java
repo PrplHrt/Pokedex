@@ -31,7 +31,6 @@ public class UpdateDeleteMove extends javax.swing.JFrame {
 
         lblMovePPError.setVisible(false);
         
-
         
         try {
             // make the result set scrolable forward/backward updatable
@@ -154,6 +153,11 @@ public class UpdateDeleteMove extends javax.swing.JFrame {
         jLabel2.setText("Move Name:");
 
         cmbType.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cmbType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTypeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -410,6 +414,10 @@ public class UpdateDeleteMove extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void cmbTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbTypeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
