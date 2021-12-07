@@ -156,6 +156,11 @@ public class AddPokemon extends javax.swing.JFrame {
         lblNameError.setText("error label");
 
         cmbType1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cmbType1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbType1ActionPerformed(evt);
+            }
+        });
 
         cmbType2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
@@ -394,6 +399,10 @@ public class AddPokemon extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error adding new pokemon.");
         }
     }//GEN-LAST:event_btnAddNewPokemonActionPerformed
+
+    private void cmbType1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbType1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbType1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
