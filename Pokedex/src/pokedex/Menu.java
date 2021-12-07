@@ -363,6 +363,7 @@ public class Menu extends JFrame {
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
         // TODO add your handling code here:
+        (new LearnMove(con)).setVisible(true);
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
 
