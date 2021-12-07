@@ -38,7 +38,7 @@ public class SearchMove extends javax.swing.JFrame {
             statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             
             // get and populate valid regions 
-            rs = statement.executeQuery("SELECT name FROM moves ORDER BY name ASC");
+            rs = statement.executeQuery("SELECT name FROM move ORDER BY name ASC");
             while (rs.next()) {
                 cmbMoves.addItem(rs.getString("name"));
             }
@@ -137,12 +137,23 @@ public class SearchMove extends javax.swing.JFrame {
             statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             rs = statement.executeQuery("SELECT * FROM pokemon NATURAL JOIN moves_learnt WHERE move_name = '" + cmbMoves.getSelectedItem().toString() +"'");
             String[] columns = {"PokedexID", "Name", "Generation", "Region", "Pre-Evolution"};
-            String[][] result = {};
+            String vals ="";
+            int count = 0;
             while(rs.next()){
-                //result += {rs.getString(1) , rs.getString(2) , rs.getString(3), rs.getString(4) , rs.getString(5) };
+                vals += rs.getString(1) +"\t"+ rs.getString(2) +"\t"+ rs.getString(3)+"\t"+ rs.getString(4) +"\t"+ rs.getString(5) + "\n";
+                count++;
             }
+            String[][] result = new String[count][5];
+            String[] rows = vals.split("\n");
+            for(int i = 0; i<count; i++){
+                String[] row = rows[i].split("\t");
+                for(int j = 0; j < 5; j++){
+                    result[i][j] = row[j];
+                }
+            }
+            tblResult.setModel(new javax.swing.table.DefaultTableModel(result,columns));
+            jScrollPane2.setViewportView(tblResult);
             
-
         } catch (SQLException e) {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "Error finding pokemon.");
