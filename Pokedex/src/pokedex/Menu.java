@@ -213,6 +213,11 @@ public class Menu extends JFrame {
 
         ForgetMove.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         ForgetMove.setText("Forget Move");
+        ForgetMove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ForgetMoveActionPerformed(evt);
+            }
+        });
         jMenu4.add(ForgetMove);
 
         jMenuBar1.add(jMenu4);
@@ -303,13 +308,13 @@ public class Menu extends JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
       //add new user
-      //(new AddUser(con)).setVisible(true);
+      (new AddUser(con)).setVisible(true);
         
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // update/delete user
-         //(new UpdateDeleteUser(con)).setVisible(true);
+         (new UpdateDeleteUser(con)).setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -367,6 +372,11 @@ public class Menu extends JFrame {
         // TODO add your handling code here:
         (new LearnMove(con)).setVisible(true);
     }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void ForgetMoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ForgetMoveActionPerformed
+        // TODO add your handling code here:
+        (new ForgetMove(con)).setVisible(true);
+    }//GEN-LAST:event_ForgetMoveActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

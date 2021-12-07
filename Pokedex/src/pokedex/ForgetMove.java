@@ -105,7 +105,7 @@ public class ForgetMove extends javax.swing.JFrame {
         txtName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         btnDelete.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnDelete.setText("Delete");
+        btnDelete.setText("Forget");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
@@ -270,27 +270,22 @@ public class ForgetMove extends javax.swing.JFrame {
 
         try {
             // make the result set scrolable forward/backward updatable
-            prepStatement = con.prepareStatement("DELETE pokemon WHERE pokedexID = " + Integer.parseInt(txtPokedexID.getText().trim()));
-            prepStatement1 = con.prepareStatement("DELETE pokemon_types WHERE pokedexID = " + Integer.parseInt(txtPokedexID.getText().trim()));
+            prepStatement = con.prepareStatement("DELETE moves_learnt WHERE pokedexID = " + Integer.parseInt(txtPokedexID.getText().trim()) + " AND move_name = '"+ txtMoveName.getText() +"'");
             // Using JOptionPane Confirm Dialog to confirm the action
-            int confirmAction = JOptionPane.showConfirmDialog(this,String.format("Confirm delete of pokemon: %s?", txtPokedexID.getText().trim()));
+            int confirmAction = JOptionPane.showConfirmDialog(this,String.format("Confirm pokemon %s forgetting %s", txtName.getText().trim(), txtMoveName.getText()));
             if (confirmAction == JOptionPane.YES_OPTION){
-                int result1 = prepStatement1.executeUpdate();
-                if (result1 > 0){
-                    int result = prepStatement.executeUpdate();
-                    if (result > 0) {
-                        javax.swing.JLabel label = new javax.swing.JLabel("Pokemon No " + txtPokedexID.getText().trim() + " deleted successfully.");
-                        label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-                        JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-                        getNewData();
-                    }
+                int result = prepStatement.executeUpdate();
+                if (result > 0) {
+                    javax.swing.JLabel label = new javax.swing.JLabel(txtName.getText() + " forgot "+ txtMoveName.getText() +" successfully.");
+                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+                    JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                    getNewData();
                 }
             }
             prepStatement.close();
-            prepStatement1.close();
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error removing pokemon.");
+            JOptionPane.showMessageDialog(null, "Error removing move learned.");
 
         }
 

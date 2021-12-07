@@ -88,7 +88,7 @@ public class LearnMove extends javax.swing.JFrame {
         lblMoveError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Update/Delete Employee");
+        setTitle("Learn New Move");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("Learn New Move");
@@ -102,7 +102,7 @@ public class LearnMove extends javax.swing.JFrame {
         cmbMoves.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnUpdate.setText("Update");
+        btnUpdate.setText("Learn");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUpdateActionPerformed(evt);
