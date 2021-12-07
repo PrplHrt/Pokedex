@@ -4,6 +4,12 @@
  */
 package pokedex;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author amira
@@ -13,8 +19,26 @@ public class SearchName extends javax.swing.JFrame {
     /**
      * Creates new form Search
      */
-    public SearchName() {
+    
+    Connection con;
+    Statement statement;
+    ResultSet rs;
+    
+    public SearchName(myDBCon connect) {
         initComponents();
+        con = connect.getCon();
+        // center form in screen 
+        this.setLocationRelativeTo(null);
+        
+        //populate Move combo box
+        try {
+            // make the result set scrolable forward/backward updatable
+            statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+   
+
+        }catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 
     /**
@@ -104,6 +128,30 @@ public class SearchName extends javax.swing.JFrame {
 
     private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
         // TODO add your handling code here:
+        try{
+        rs = statement.executeQuery("SELECT * FROM Pokemon where name = '" + jTextField1.getText().trim()+"' ORDER BY name ASC");
+        String[] columns = {"PokedexID", "Name", "Generation", "Region", "Pre-Evolution"};
+            String vals ="";
+            int count = 0;
+            while(rs.next()){
+                vals += rs.getString(1) +"\t"+ rs.getString(2) +"\t"+ rs.getString(3)+"\t"+ rs.getString(4) +"\t"+ rs.getString(5) + "\n";
+                count++;
+            }
+            String[][] result = new String[count][5];
+            String[] rows = vals.split("\n");
+            for(int i = 0; i<count; i++){
+                String[] row = rows[i].split("\t");
+                for(int j = 0; j < 5; j++){
+                    result[i][j] = row[j];
+                }
+            }
+            tblResult.setModel(new javax.swing.table.DefaultTableModel(result,columns));
+            jScrollPane2.setViewportView(tblResult);
+        }catch(SQLException e){
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Error finding pokemon.");
+        }
+        
     }//GEN-LAST:event_jButtonSearchActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

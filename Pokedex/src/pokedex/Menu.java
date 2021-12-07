@@ -354,6 +354,8 @@ public class Menu extends JFrame {
 
     private void SearchNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchNameActionPerformed
         // TODO add your handling code here:
+        (new SearchName(con)).setVisible(true);
+
     }//GEN-LAST:event_SearchNameActionPerformed
 
     private void SearchMoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchMoveActionPerformed
