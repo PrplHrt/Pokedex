@@ -56,8 +56,8 @@ public class Menu extends JFrame {
         jMenuItem14 = new javax.swing.JMenuItem();
         ForgetMove = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItemInRegion = new javax.swing.JMenuItem();
+        JMenuItemByType = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         SearchName = new javax.swing.JMenuItem();
         SearchMove = new javax.swing.JMenuItem();
@@ -220,23 +220,23 @@ public class Menu extends JFrame {
         jMenu5.setText("Statistics");
         jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
 
-        jMenuItem9.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jMenuItem9.setText("Pokemon In Region");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemInRegion.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jMenuItemInRegion.setText("Pokemon In Region");
+        jMenuItemInRegion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
+                jMenuItemInRegionActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem9);
+        jMenu5.add(jMenuItemInRegion);
 
-        jMenuItem10.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jMenuItem10.setText("Pokemon by Type");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+        JMenuItemByType.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        JMenuItemByType.setText("Pokemon by Type");
+        JMenuItemByType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
+                JMenuItemByTypeActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem10);
+        jMenu5.add(JMenuItemByType);
 
         jMenuBar1.add(jMenu5);
 
@@ -322,10 +322,10 @@ public class Menu extends JFrame {
         (new UpdateDeleteType(con)).setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+    private void jMenuItemInRegionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInRegionActionPerformed
         // TODO add your handling code here:
         (new StatRegion(con)).setVisible(true);
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
+    }//GEN-LAST:event_jMenuItemInRegionActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         // TODO add your handling code here:
@@ -347,10 +347,10 @@ public class Menu extends JFrame {
         (new UpdateDeleteRegion(con)).setVisible(true);
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+    private void JMenuItemByTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMenuItemByTypeActionPerformed
         // TODO add your handling code here:
         (new StatType(con)).setVisible(true);
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
+    }//GEN-LAST:event_JMenuItemByTypeActionPerformed
 
     private void SearchNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchNameActionPerformed
         // TODO add your handling code here:
@@ -369,6 +369,7 @@ public class Menu extends JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem ForgetMove;
+    private javax.swing.JMenuItem JMenuItemByType;
     private javax.swing.JMenu LearnMove;
     private javax.swing.JMenuItem SearchMove;
     private javax.swing.JMenuItem SearchName;
@@ -380,7 +381,6 @@ public class Menu extends JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
@@ -393,6 +393,6 @@ public class Menu extends JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenuItem jMenuItemInRegion;
     // End of variables declaration//GEN-END:variables
 }
