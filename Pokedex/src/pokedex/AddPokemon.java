@@ -59,7 +59,7 @@ public class AddPokemon extends javax.swing.JFrame {
             
             // get and populate valid preevolutions 
             cmbPreEv.addItem("None");
-            rs = statement.executeQuery("SELECT pokedexID FROM pokemon ORDER BY pokedexID ASC");
+            rs = statement.executeQuery("SELECT pokedexID FROM pokemon WHERE pokedexid <> 0 ORDER BY pokedexID ASC");
             while (rs.next()) {
                 cmbPreEv.addItem(rs.getString("pokedexID"));
             }

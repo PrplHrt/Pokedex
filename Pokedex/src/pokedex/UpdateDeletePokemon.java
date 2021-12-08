@@ -78,7 +78,7 @@ public class UpdateDeletePokemon extends javax.swing.JFrame {
             }
             
             // populate PreEv field
-            rs = statement.executeQuery("SELECT PokedexID, name, generation, region, preevolution FROM pokemon ORDER BY PokedexID ASC");
+            rs = statement.executeQuery("SELECT PokedexID, name, generation, region, preevolution FROM pokemon WHERE pokedexid <> 0  ORDER BY PokedexID ASC");
             cmbPreEv.removeAllItems();
             cmbPreEv.addItem("null");
             while(rs.next()){

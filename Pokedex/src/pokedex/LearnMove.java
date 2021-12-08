@@ -57,7 +57,7 @@ public class LearnMove extends javax.swing.JFrame {
             }
             
             //pokemon field
-            rsPokemon = statement.executeQuery("SELECT name, pokedexID FROM pokemon ORDER BY pokedexID ASC ");
+            rsPokemon = statement.executeQuery("SELECT name, pokedexID FROM pokemon WHERE pokedexid <> 0 ORDER BY pokedexID ASC ");
             rsPokemon.beforeFirst();
             rsPokemon.first();
             populateFields();

@@ -140,7 +140,7 @@ public class SearchMove extends javax.swing.JFrame {
         try {
             // make the result set scrolable forward/backward updatable
             statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            rs = statement.executeQuery("SELECT * FROM pokemon NATURAL JOIN moves_learnt WHERE move_name = '" + cmbMoves.getSelectedItem().toString() +"'");
+            rs = statement.executeQuery("SELECT * FROM pokemon NATURAL JOIN moves_learnt WHERE pokedexid <> 0 and move_name = '" + cmbMoves.getSelectedItem().toString() +"'");
             String[] columns = {"PokedexID", "Name", "Generation", "Region", "Pre-Evolution"};
             String vals ="";
             int count = 0;
