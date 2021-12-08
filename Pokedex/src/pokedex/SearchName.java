@@ -55,6 +55,8 @@ public class SearchName extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblResult = new javax.swing.JTable();
 
+        setTitle("Search for Pokemon");
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Search Using Name: ");
 

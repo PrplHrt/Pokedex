@@ -65,7 +65,7 @@ public class Menu extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Pokedex Menu");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pokedex/pokemon_background.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pokedex/PokemonBackground (2).png"))); // NOI18N
         jLabel1.setText("jLabel1");
 
         jMenuBar1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N

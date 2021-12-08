@@ -67,7 +67,7 @@ public class StatRegion extends javax.swing.JFrame {
         txtResult = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Add New Pokemon");
+        setTitle("#Pokemon by Region");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Number of Pokemon in");

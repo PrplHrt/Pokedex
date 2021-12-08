@@ -37,8 +37,11 @@ public class UpdateDeleteRegion extends javax.swing.JFrame {
         initComponents();
         con = connect.getCon();
         this.setLocationRelativeTo(null);
+        
+        lblCapitalError.setVisible(false);
+        lblProfError.setVisible(false);
 
-        //populate mgr and deptno combo boxes 
+        
         try {
             // make the result set scrolable forward/backward updatable
             statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);

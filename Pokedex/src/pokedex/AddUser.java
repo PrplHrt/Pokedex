@@ -108,7 +108,7 @@ public class AddUser extends javax.swing.JFrame {
         jCheckBoxPass2 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Add New Employee");
+        setTitle("Add New User");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("Add New User");
@@ -369,7 +369,7 @@ public class AddUser extends javax.swing.JFrame {
                 int result = prepStatement.executeUpdate();
                 if (result > 0) {
 
-                    javax.swing.JLabel label = new javax.swing.JLabel("New employee added successfully.");
+                    javax.swing.JLabel label = new javax.swing.JLabel("New user added successfully.");
                     label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
                     JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
 
@@ -390,7 +390,7 @@ public class AddUser extends javax.swing.JFrame {
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error adding new employee.");
+            JOptionPane.showMessageDialog(null, "Error adding new user.");
         }catch(Exception e){System.out.print(e);}
     }//GEN-LAST:event_btnAddNewEmpActionPerformed
 
