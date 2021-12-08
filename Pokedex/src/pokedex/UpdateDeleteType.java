@@ -63,8 +63,9 @@ public class UpdateDeleteType extends javax.swing.JFrame {
             // populate powerful_against field
             rs = statement.executeQuery("SELECT name, generation, powerful_against FROM type ORDER BY name ASC ");
             cmbPwrAgnst.removeAllItems();
+            cmbPwrAgnst.addItem("None");
             while (rs.next()) {
-                cmbPwrAgnst.addItem(rs.getString("powerful_against"));
+                cmbPwrAgnst.addItem(rs.getString("name"));
             }
             
 
@@ -382,7 +383,10 @@ public class UpdateDeleteType extends javax.swing.JFrame {
                 prepStatement = con.prepareStatement("UPDATE type SET generation = ?, powerful_against = ? WHERE name = '" + txtTypeName.getText().trim().toUpperCase() + "'");
 
                 prepStatement.setString(1, cmbGen.getSelectedItem().toString());
-                prepStatement.setString(2, cmbPwrAgnst.getSelectedItem().toString());
+                if(cmbPwrAgnst.getSelectedIndex() != 0)
+                    prepStatement.setString(2, cmbPwrAgnst.getSelectedItem().toString());
+                else
+                    prepStatement.setString(2, null);
                
                 // Using JOptionPane Confirm Dialog to confirm the action
                 int confirmAction = JOptionPane.showConfirmDialog(this,"Confirm update?");
