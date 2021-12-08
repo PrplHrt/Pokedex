@@ -303,27 +303,25 @@ public class UpdateDeleteRegion extends javax.swing.JFrame {
 
         try {
             // make the result set scrolable forward/backward updatable
-            prepStatement = con.prepareStatement("DELETE region WHERE name = " + txtName.getText().trim());
-            prepStatement1 = con.prepareStatement("UPDATE pokemon SET region = null WHERE region = '" + txtName.getText().trim().toUpperCase() +"'");
+            prepStatement = con.prepareStatement("DELETE region WHERE name = '" + txtName.getText().trim()+"'");
             // Using JOptionPane Confirm Dialog to confirm the action
             int confirmAction = JOptionPane.showConfirmDialog(this,String.format("Confirm delete of region: %s?", txtName.getText().trim()));
             if (confirmAction == JOptionPane.YES_OPTION){
-                int result1 = prepStatement1.executeUpdate();
-                if (result1 > 0){
-                    int result = prepStatement.executeUpdate();
-                    if (result > 0) {
-                        javax.swing.JLabel label = new javax.swing.JLabel("Region " + txtName.getText().trim() + " deleted successfully.");
-                        label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-                        JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-                        getNewData();
-                    }
+
+                int result = prepStatement.executeUpdate();
+                if (result > 0) {
+                    javax.swing.JLabel label = new javax.swing.JLabel("Region " + txtName.getText().trim() + " deleted successfully.");
+                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
+                    JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                    getNewData();
+
                 }
             }
             prepStatement.close();
-            prepStatement1.close();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error removing pokemon.");
+            System.out.println(e);
 
         }
 
