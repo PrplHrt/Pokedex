@@ -1,5 +1,5 @@
 # Pokedex Project
-CMP 320: Database Systems Project.
+CMP 320: Database Systems Project on Apache NetBeans.
 
 Assigned by Dr. Osameh of the CSE Department at the American University of Sharjah.
 
